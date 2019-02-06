@@ -1,0 +1,388 @@
+{
+  "Uuid": "3c9d0464-8643-5ffe-96e5-ab1769818209",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Template",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [],
+  "Connectors": [],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 1.143530011177063,
+      "EyeY": 117.66590881347656,
+      "EyeZ": 32.759750366210938,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [],
+    "Annotations": [
+      {
+        "Id": "2a417afb16d04c7584d862fe5b929335",
+        "Title": "USER INTERFACE",
+        "Nodes": [
+          "eaeb4f5640e6462b849943b52b546aa9"
+        ],
+        "Left": -600.102567558182,
+        "Top": 98.11968115465001,
+        "Width": 303.0,
+        "Height": 169.0,
+        "FontSize": 48.0,
+        "InitialTop": 223.11968115465,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 115.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "43b2f6ae4af2481f88fd82dbfc220793",
+        "Title": "BACK-END",
+        "Nodes": [
+          "68ea7022ae2243f5b48435b1d015e42c"
+        ],
+        "Left": 163.33495941762,
+        "Top": 147.719165262606,
+        "Width": 247.0,
+        "Height": 112.0,
+        "FontSize": 48.0,
+        "InitialTop": 215.719165262606,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 58.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "97919dbaaca34d5a85aaf2031f553d3e",
+        "Title": "SCRIPT NAME ",
+        "Nodes": [
+          "a27124ffe29c4d898f00c53d3e13422e"
+        ],
+        "Left": -990.337476270661,
+        "Top": -270.220365598829,
+        "Width": 326.0,
+        "Height": 256.0,
+        "FontSize": 36.0,
+        "InitialTop": -217.220365598829,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "053e4420ad27467498bbdb11dc24274c",
+        "Title": "INSTRUCTIONS ",
+        "Nodes": [
+          "16bdb1b4929446f7bc41446e1c9f748e"
+        ],
+        "Left": -987.976216824106,
+        "Top": 73.203250337705,
+        "Width": 326.0,
+        "Height": 198.0,
+        "FontSize": 36.0,
+        "InitialTop": 126.203250337705,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "c1c9b7d0264d42158b7b60997a6d205c",
+        "Title": "WIP",
+        "Nodes": [
+          "c988d753fdd4402c954ff7fb7066e452",
+          "258e89ac45b4483bbf7431c72303daf7"
+        ],
+        "Left": 623.21693873344611,
+        "Top": -176.5858770675743,
+        "Width": 213.0,
+        "Height": 213.22121579960162,
+        "FontSize": 36.0,
+        "InitialTop": -123.5858770675743,
+        "InitialHeight": 227.221215799601,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "f476c87ac0db4a1b94aff0c8b7f370e3",
+        "Title": "TO REVIT",
+        "Nodes": [
+          "9f7d18116bda4a30984c46f5a55648fa",
+          "4eee629ef18742a9ac5bad3b860bc085"
+        ],
+        "Left": 58.248254460180249,
+        "Top": -175.7988544999663,
+        "Width": 167.85399193257598,
+        "Height": 211.88612548280011,
+        "FontSize": 36.0,
+        "InitialTop": -122.7988544999663,
+        "InitialHeight": 225.8861254828,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "dc533b6741b1470b98385cae6033172b",
+        "Title": "INPUT",
+        "Nodes": [
+          "3db28876ca7843fab859619d8c2189e7",
+          "8571966cf6994aa1a07f60b4c71c91f6"
+        ],
+        "Left": -596.560446181683,
+        "Top": -178.45156289593598,
+        "Width": 264.85373477215262,
+        "Height": 209.31525247810728,
+        "FontSize": 36.0,
+        "InitialTop": -125.451562895936,
+        "InitialHeight": 210.847171429116,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8fd9a666682d47bf8df64a21de57dfa4",
+        "Title": "DESIGN",
+        "Nodes": [
+          "fa4603bbb0a04bbc9f434b047c930705",
+          "dec0be302b154222a6e04cde88373297"
+        ],
+        "Left": -310.99622265218619,
+        "Top": -176.67193296489899,
+        "Width": 352.17615660154166,
+        "Height": 211.43610499129539,
+        "FontSize": 36.0,
+        "InitialTop": -123.671932964899,
+        "InitialHeight": 239.436104991295,
+        "TextblockHeight": 43.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "40a86a509ce34f0c9e79476d3a924bab",
+        "Title": "COMMENTS",
+        "Nodes": [
+          "afff2f6179f847eaa38c58bad4fa6eb6",
+          "2739ccab355f4bc5a368def5f1fee605"
+        ],
+        "Left": 244.71744965186963,
+        "Top": -177.60510602283247,
+        "Width": 356.615681039823,
+        "Height": 213.4446664822149,
+        "FontSize": 36.0,
+        "InitialTop": -124.60510602283247,
+        "InitialHeight": 190.4446664822149,
+        "TextblockHeight": 43.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "eaeb4f5640e6462b849943b52b546aa9",
+        "Title": "INPUT                                                                      ",
+        "Nodes": [],
+        "Left": -590.102567558182,
+        "Top": 223.11968115465,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "68ea7022ae2243f5b48435b1d015e42c",
+        "Title": "BACK-END FUNCTIONALITY                  ",
+        "Nodes": [],
+        "Left": 173.33495941762,
+        "Top": 215.719165262606,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a27124ffe29c4d898f00c53d3e13422e",
+        "Title": "                                                                                       \r\nCREATED BY:\r\nCREATED: \r\nVERSION: \r\nLAST EDITED: \r\n\r\nDYNAMO VERSION: \r\n\r\nPACKAGES:\r\n\r\nNOTES:\r\n",
+        "Nodes": [],
+        "Left": -980.337476270661,
+        "Top": -217.220365598829,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "16bdb1b4929446f7bc41446e1c9f748e",
+        "Title": "                                                                                       \r\nINSTRUCTIONS:\r\n\r\n1.\r\n\r\n2. \r\n\r\n3.",
+        "Nodes": [],
+        "Left": -977.976216824106,
+        "Top": 126.203250337705,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "258e89ac45b4483bbf7431c72303daf7",
+        "Title": "USE:\r\nFOR UNFINISHED OR UNTESTED\r\nBLOCKS OF CODE",
+        "Nodes": [],
+        "Left": 633.21693873344611,
+        "Top": -36.364661267972693,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "afff2f6179f847eaa38c58bad4fa6eb6",
+        "Title": "USE:\r\nFOR ANY COMMENTS OR PROJECT INFO",
+        "Nodes": [],
+        "Left": 254.71744965186963,
+        "Top": -23.160439540617574,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4eee629ef18742a9ac5bad3b860bc085",
+        "Title": "USE:\r\nFOR ANY GROUP THAT \r\nWRITES DATA TO REVIT",
+        "Nodes": [],
+        "Left": 70.102246392756228,
+        "Top": -36.912729017166185,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "9f7d18116bda4a30984c46f5a55648fa",
+        "Title": "TO REVIT",
+        "Nodes": [],
+        "Left": 68.248254460180249,
+        "Top": -122.7988544999663,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "2739ccab355f4bc5a368def5f1fee605",
+        "Title": "COMMENTS",
+        "Nodes": [],
+        "Left": 255.64176861204663,
+        "Top": -124.60510602283247,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "c988d753fdd4402c954ff7fb7066e452",
+        "Title": "WIP",
+        "Nodes": [],
+        "Left": 637.13566836364816,
+        "Top": -123.5858770675743,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8571966cf6994aa1a07f60b4c71c91f6",
+        "Title": "USE:\r\nINPUTS THAT ARE REQUIRED TO BE\r\nSET BY THE USER",
+        "Nodes": [],
+        "Left": -586.560446181683,
+        "Top": -42.1363104178287,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "3db28876ca7843fab859619d8c2189e7",
+        "Title": "INPUT",
+        "Nodes": [],
+        "Left": -586.147514287169,
+        "Top": -125.451562895936,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "dec0be302b154222a6e04cde88373297",
+        "Title": "USE:\r\nFOR BLOCKS OF CODE THAT DO A SPECIFIC TASK",
+        "Nodes": [],
+        "Left": -300.99622265218619,
+        "Top": -24.235827973603605,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "fa4603bbb0a04bbc9f434b047c930705",
+        "Title": "DESIGN",
+        "Nodes": [],
+        "Left": -298.38571258706116,
+        "Top": -123.671932964899,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 859.88272506141232,
+    "Y": 382.0930491404103,
+    "Zoom": 0.71634221933805686
+  }
+}

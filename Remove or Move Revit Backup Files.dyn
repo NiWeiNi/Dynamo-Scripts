@@ -1,0 +1,630 @@
+{
+  "Uuid": "3c9d0464-8643-5ffe-96e5-ab1769818209",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Remove or Move Revit Backup Files",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "400978a2fa684033a9341693236ddb0e",
+      "Name": "Library Path",
+      "Type": "string",
+      "Value": "D:\\revit library",
+      "Description": "Allows you to select a directory on the system to get its path"
+    },
+    {
+      "Id": "3ec7fa1e11fe44669775fd1ddba79f67",
+      "Name": "Delete=True or Move=False?",
+      "Type": "boolean",
+      "Value": "true",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "Id": "b571657596da482e82548d4fb4651629",
+      "Name": "Backup path (case Move option selected)",
+      "Type": "string",
+      "Value": "D:\\Backup Folder",
+      "Description": "Allows you to select a directory on the system to get its path"
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "2db0648f1cf0457c9b9ba8ad9ad65380",
+      "Name": "Python Script to Remove or Move Revit Backup Files",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Runs an embedded IronPython script."
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.Directory, CoreNodeModels",
+      "HintPath": "D:\\revit library",
+      "InputValue": "D:\\revit library",
+      "NodeType": "ExtensionNode",
+      "Id": "400978a2fa684033a9341693236ddb0e",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5c8e17269d82496792b7c721d337e65f",
+          "Name": "",
+          "Description": "Directory",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a directory on the system to get its path"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Import sys module and assign the right path for the IronPython Library\nimport sys\nsys.path.append(r\"C:\\Program Files (x86)\\IronPython 2.7\\Lib\")\n# Import os module to get directories\nimport os\n# Import re module to match file extensions\nimport re\n# Import shutil module to move files\nimport shutil\n\n# The inputs to this node will be stored as a list in the IN variables.\ndirectory = IN[0]\ndelMov = IN[1]\nbackupDir = IN[2]\n\n# Empty list to store the filenames that have been removed or moved\nmodFiles = list()\n\n# Function to clean the backup files\ndef directoryClean():\n\t# Collect all files in directory and subdirectories\n\tfor folderName, subFolders, files in os.walk(directory):\n\t\t# Pattern to check against if file is a revit family or project backup\n\t\tmatchBackups = re.compile(r'.*\\.\\d+.r(vt|fa)$')\n\t\t# Loop over the files\n\t\tfor file in files:\n\t\t\t# Assign the matched files to a variable\n\t\t\tmatched = matchBackups.search(file)\n\t\t\t# If the file is a match\n\t\t\tif matched:\n\t\t\t\t# Get the original filepath for the file\n\t\t\t\tfilePath = os.path.join(folderName, file)\n\t\t\t\t# Get the destination filepath for the file (move will overwrite previous versions if full path is provided)\n\t\t\t\tbackupPath = os.path.join(backupDir, file)\n\t\t\t\t# Change matched files permission to writable\n\t\t\t\tos.chmod(filePath, 436)\n\t\t\t\t# Append modified elements to modFiles list\n\t\t\t\tmodFiles.append(file)\n\t\t\t\t# Case False: Move backup files\n\t\t\t\tif delMov == False:\n\t\t\t\t\t# Move matched files\n\t\t\t\t\tshutil.move(filePath, backupPath)\n\t\t\t\t# Case True: Delete backup files\n\t\t\t\telse:\n\t\t\t\t\t# Delete matched files\n\t\t\t\t\tos.unlink(filePath)\n\n# Call the function to execute\ndirectoryClean()\n\n#Assign your output to the OUT variable.\nOUT = modFiles",
+      "VariableInputPorts": true,
+      "Id": "2db0648f1cf0457c9b9ba8ad9ad65380",
+      "Inputs": [
+        {
+          "Id": "070f9895d52b412e909dfe07f250debd",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fe4eba3d6b3744a8a19ab19044f4e2e0",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8fa4244ef4d846879ca052315f816931",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "628085189938405fa11d2509349c7223",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2635c3f8cf8446539ff0e31ebc4aa8b9",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Id": "3ec7fa1e11fe44669775fd1ddba79f67",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0af5c78ad7ef49999ddf98d68f3b9488",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Selection between a true and false."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.Directory, CoreNodeModels",
+      "HintPath": "D:\\Nueva carpeta",
+      "InputValue": "D:\\Backup Folder",
+      "NodeType": "ExtensionNode",
+      "Id": "b571657596da482e82548d4fb4651629",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fc63099d3a8d46afb227835f0778a32a",
+          "Name": "",
+          "Description": "Directory",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows you to select a directory on the system to get its path"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "5c8e17269d82496792b7c721d337e65f",
+      "End": "070f9895d52b412e909dfe07f250debd",
+      "Id": "95e15389e95d499591a99fef18a4a41f"
+    },
+    {
+      "Start": "0af5c78ad7ef49999ddf98d68f3b9488",
+      "End": "fe4eba3d6b3744a8a19ab19044f4e2e0",
+      "Id": "3083cf8d451d46d7a24d685bc53c730d"
+    },
+    {
+      "Start": "fc63099d3a8d46afb227835f0778a32a",
+      "End": "8fa4244ef4d846879ca052315f816931",
+      "Id": "22880e54125f4036888a474a56b2aa29"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 1.143530011177063,
+      "EyeY": 117.66590881347656,
+      "EyeZ": 32.759750366210938,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "NodeViews": [
+      {
+        "ShowGeometry": true,
+        "Name": "Library Path",
+        "Id": "400978a2fa684033a9341693236ddb0e",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -309.03365681823362,
+        "Y": 418.34710243898809
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Python Script to Remove or Move Revit Backup Files",
+        "Id": "2db0648f1cf0457c9b9ba8ad9ad65380",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "X": -47.883703449422285,
+        "Y": 421.642965372962
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Delete=True or Move=False?",
+        "Id": "3ec7fa1e11fe44669775fd1ddba79f67",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -390.86747144464749,
+        "Y": 518.95407036924689
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Backup path (case Move option selected)",
+        "Id": "b571657596da482e82548d4fb4651629",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": -469.14386079698886,
+        "Y": 597.09840730825749
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "2a417afb16d04c7584d862fe5b929335",
+        "Title": "USER INTERFACE",
+        "Nodes": [
+          "eaeb4f5640e6462b849943b52b546aa9"
+        ],
+        "Left": -600.102567558182,
+        "Top": 155.11968115465,
+        "Width": 391.0,
+        "Height": 112.0,
+        "FontSize": 48.0,
+        "InitialTop": 223.11968115465,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 58.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "43b2f6ae4af2481f88fd82dbfc220793",
+        "Title": "DESIGN",
+        "Nodes": [
+          "68ea7022ae2243f5b48435b1d015e42c"
+        ],
+        "Left": -63.068056565452,
+        "Top": 156.99797739305973,
+        "Width": 188.0,
+        "Height": 112.0,
+        "FontSize": 48.0,
+        "InitialTop": 224.99797739305973,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 58.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "97919dbaaca34d5a85aaf2031f553d3e",
+        "Title": "SCRIPT NAME ",
+        "Nodes": [
+          "a27124ffe29c4d898f00c53d3e13422e"
+        ],
+        "Left": -990.337476270661,
+        "Top": -270.220365598829,
+        "Width": 326.0,
+        "Height": 241.0,
+        "FontSize": 36.0,
+        "InitialTop": -217.220365598829,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "053e4420ad27467498bbdb11dc24274c",
+        "Title": "INSTRUCTIONS ",
+        "Nodes": [
+          "16bdb1b4929446f7bc41446e1c9f748e"
+        ],
+        "Left": -993.8309801585234,
+        "Top": 14.655616993530941,
+        "Width": 326.0,
+        "Height": 256.0,
+        "FontSize": 36.0,
+        "InitialTop": 67.655616993530941,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 43.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "c1c9b7d0264d42158b7b60997a6d205c",
+        "Title": "WIP",
+        "Nodes": [
+          "c988d753fdd4402c954ff7fb7066e452",
+          "258e89ac45b4483bbf7431c72303daf7"
+        ],
+        "Left": 623.4121420746842,
+        "Top": -178.84732757305505,
+        "Width": 213.0,
+        "Height": 213.22121579960162,
+        "FontSize": 36.0,
+        "InitialTop": -125.84732757305505,
+        "InitialHeight": 227.22121579960162,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "f3c4719976674a2faff75af5bffe176e",
+        "Title": "COMMENTS",
+        "Nodes": [
+          "2739ccab355f4bc5a368def5f1fee605",
+          "afff2f6179f847eaa38c58bad4fa6eb6"
+        ],
+        "Left": 238.57099721181794,
+        "Top": -180.024701194551,
+        "Width": 356.615681039823,
+        "Height": 213.4446664822149,
+        "FontSize": 36.0,
+        "InitialTop": -127.024701194551,
+        "InitialHeight": 241.4446664822149,
+        "TextblockHeight": 43.0,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "f476c87ac0db4a1b94aff0c8b7f370e3",
+        "Title": "TO REVIT",
+        "Nodes": [
+          "9f7d18116bda4a30984c46f5a55648fa",
+          "4eee629ef18742a9ac5bad3b860bc085"
+        ],
+        "Left": 52.101802020128559,
+        "Top": -179.428247257544,
+        "Width": 167.85399193257598,
+        "Height": 211.88612548280011,
+        "FontSize": 36.0,
+        "InitialTop": -126.428247257544,
+        "InitialHeight": 225.88612548280011,
+        "TextblockHeight": 43.0,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "dc533b6741b1470b98385cae6033172b",
+        "Title": "INPUT",
+        "Nodes": [
+          "3db28876ca7843fab859619d8c2189e7",
+          "8571966cf6994aa1a07f60b4c71c91f6"
+        ],
+        "Left": -596.560446181683,
+        "Top": -178.45156289593598,
+        "Width": 264.85373477215262,
+        "Height": 209.31525247810728,
+        "FontSize": 36.0,
+        "InitialTop": -125.451562895936,
+        "InitialHeight": 223.31525247810728,
+        "TextblockHeight": 43.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8fd9a666682d47bf8df64a21de57dfa4",
+        "Title": "DESIGN",
+        "Nodes": [
+          "fa4603bbb0a04bbc9f434b047c930705",
+          "dec0be302b154222a6e04cde88373297"
+        ],
+        "Left": -307.51703999495618,
+        "Top": -179.40781746909289,
+        "Width": 337.17615660154166,
+        "Height": 211.43610499129539,
+        "FontSize": 36.0,
+        "InitialTop": -126.4078174690929,
+        "InitialHeight": 239.43610499129539,
+        "TextblockHeight": 43.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "f339f187f5b34bed872e7005514341e2",
+        "Title": "USER SELECTION",
+        "Nodes": [
+          "400978a2fa684033a9341693236ddb0e",
+          "3ec7fa1e11fe44669775fd1ddba79f67",
+          "b571657596da482e82548d4fb4651629"
+        ],
+        "Left": -479.14386079698886,
+        "Top": 386.34710243898809,
+        "Width": 283.11020397875524,
+        "Height": 304.7513048692694,
+        "FontSize": 18.0,
+        "InitialTop": 418.34710243898809,
+        "InitialHeight": 323.7513048692694,
+        "TextblockHeight": 22.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "24a81c7301f64849b2cf1caec9b740ee",
+        "Title": "PYTHON SCRIPT TO CLEAN DIRECTORY",
+        "Nodes": [
+          "2db0648f1cf0457c9b9ba8ad9ad65380"
+        ],
+        "Left": -57.883703449422285,
+        "Top": 389.642965372962,
+        "Width": 355.0,
+        "Height": 203.0,
+        "FontSize": 18.0,
+        "InitialTop": 421.642965372962,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 22.0,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "eaeb4f5640e6462b849943b52b546aa9",
+        "Title": "INPUT + CONTROL                                                                            ",
+        "Nodes": [],
+        "Left": -590.102567558182,
+        "Top": 223.11968115465,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "68ea7022ae2243f5b48435b1d015e42c",
+        "Title": "BACK-END FUNCTIONALITY",
+        "Nodes": [],
+        "Left": -53.068056565452,
+        "Top": 224.99797739305973,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a27124ffe29c4d898f00c53d3e13422e",
+        "Title": "                                                                                       \r\nCREATED BY:\r\nCREATED: 2019-01-21\r\nVERSION: 1.0\r\nLAST EDITED: 2019-01-21\r\n\r\nDYNAMO VERSION: 2.0\r\n\r\nPACKAGES:\r\n\r\nNOTES:",
+        "Nodes": [],
+        "Left": -980.337476270661,
+        "Top": -217.220365598829,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "16bdb1b4929446f7bc41446e1c9f748e",
+        "Title": "                                                                                       \r\nINSTRUCTIONS:\r\n\r\n1. Select the folder to clean. All subfolders will be cleaned too.\r\n\r\n2. Select delete or move the files.\r\n\r\n3. If Move is selected, choose the folder to move all the Revit backup files.\r\n\r\n4. Click Run.",
+        "Nodes": [],
+        "Left": -983.8309801585234,
+        "Top": 67.655616993530941,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "258e89ac45b4483bbf7431c72303daf7",
+        "Title": "USE:\r\nFOR UNFINISHED OR UNTESTED\r\nBLOCKS OF CODE",
+        "Nodes": [],
+        "Left": 633.4121420746842,
+        "Top": -38.626111773453445,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "afff2f6179f847eaa38c58bad4fa6eb6",
+        "Title": "USE:\r\nFOR ANY COMMENTS OR PROJECT INFO",
+        "Nodes": [],
+        "Left": 248.57099721181794,
+        "Top": -25.5800347123361,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4eee629ef18742a9ac5bad3b860bc085",
+        "Title": "USE:\r\nFOR ANY GROUP THAT \r\nWRITES DATA TO REVIT",
+        "Nodes": [],
+        "Left": 63.955793952704539,
+        "Top": -40.5421217747439,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "9f7d18116bda4a30984c46f5a55648fa",
+        "Title": "TO REVIT",
+        "Nodes": [],
+        "Left": 62.101802020128559,
+        "Top": -126.428247257544,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "2739ccab355f4bc5a368def5f1fee605",
+        "Title": "COMMENTS",
+        "Nodes": [],
+        "Left": 249.49531617199494,
+        "Top": -127.024701194551,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "c988d753fdd4402c954ff7fb7066e452",
+        "Title": "WIP",
+        "Nodes": [],
+        "Left": 637.33087170488625,
+        "Top": -125.84732757305505,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "8571966cf6994aa1a07f60b4c71c91f6",
+        "Title": "USE:\r\nINPUTS THAT ARE REQUIRED TO BE\r\nDECLARED BY THE USER",
+        "Nodes": [],
+        "Left": -586.560446181683,
+        "Top": -42.1363104178287,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "3db28876ca7843fab859619d8c2189e7",
+        "Title": "INPUT",
+        "Nodes": [],
+        "Left": -586.147514287169,
+        "Top": -125.451562895936,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "dec0be302b154222a6e04cde88373297",
+        "Title": "USE:\r\nFOR GENERAL DEFINITIONS OF NODE BLOCKS",
+        "Nodes": [],
+        "Left": -297.51703999495618,
+        "Top": -26.97171247779751,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "fa4603bbb0a04bbc9f434b047c930705",
+        "Title": "DESIGN",
+        "Nodes": [],
+        "Left": -294.90652992983115,
+        "Top": -126.4078174690929,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 886.792820951961,
+    "Y": 293.96530778866133,
+    "Zoom": 0.75800000835477521
+  }
+}
