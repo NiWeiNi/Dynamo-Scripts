@@ -9,7 +9,7 @@
   "Inputs": [
     {
       "Id": "175f1d09f0c2492097c25d825f4aefa5",
-      "Name": "OFFSET FROM LEVEL",
+      "Name": "Offset from Level",
       "Type": "number",
       "Value": "0",
       "NumberType": "Double",
@@ -432,7 +432,7 @@
     },
     {
       "ConcreteType": "DSRevitNodesUI.Levels, DSRevitNodesUI",
-      "SelectedIndex": -1,
+      "SelectedIndex": 0,
       "NodeType": "ExtensionNode",
       "Id": "42969e4fbe6145d58aef87e45071a775",
       "Inputs": [],
@@ -899,7 +899,7 @@
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d045fec02ef6472a8955614ee8e85b8b",
+          "Id": "32c76506018e41e8a9a7f12ff2c69424",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -963,12 +963,12 @@
     {
       "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
       "NodeType": "CodeBlockNode",
-      "Code": "\"FLOOR FINISHES DO NOT CHANGE\";",
+      "Code": "\"FLOOR FINISHES\";",
       "Id": "c3d059c6fcca4b519b337cd7ff728676",
       "Inputs": [],
       "Outputs": [
         {
-          "Id": "d82ddb9d82bc43b38180ae0cd901d546",
+          "Id": "65a644f2052d460eb077dfec161d408b",
           "Name": "",
           "Description": "Value of expression at line 1",
           "UsingDefaultValue": false,
@@ -979,6 +979,182 @@
       ],
       "Replication": "Disabled",
       "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Element.GetParameterValueByName@string",
+      "Id": "293fb40fba854adcb6b2cdbde3a0d108",
+      "Inputs": [
+        {
+          "Id": "a704a69a3c7f46169e538c09ac812dbd",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6d5efdbbe6ff494cbc77cb5119c72a28",
+          "Name": "parameterName",
+          "Description": "The name of the parameter whose value you want to obtain.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "84a80b479a494efeb881722c45f76f13",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Get the value of one of the element's parameters.\n\nElement.GetParameterValueByName (parameterName: string): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "DSCore.List.FilterByBoolMask@var[]..[],var[]..[]",
+      "Id": "d3dffd2ed53641549a175014e37e4359",
+      "Inputs": [
+        {
+          "Id": "03df83662b4d4866bb45791c3bc35f69",
+          "Name": "list",
+          "Description": "List to filter.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c1f66cdc0e904396b3698abadad8ad4b",
+          "Name": "mask",
+          "Description": "List of booleans representing a mask.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ced5aa6d6a9f4bad9f22f0584d31e898",
+          "Name": "in",
+          "Description": "Items whose mask index is true.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8c7a897e0edf4284b54aafa7bcdc1925",
+          "Name": "out",
+          "Description": "Items whose mask index is false.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Filters a sequence by looking up corresponding indices in a separate list of booleans.\n\nList.FilterByBoolMask (list: var[]..[], mask: var[]..[]): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "Revit.Elements.Level.Name",
+      "Id": "36f658ee5be84a0fab79e5c0f957f001",
+      "Inputs": [
+        {
+          "Id": "4bb563c5c89743a2b0fcb6fa6ce9c184",
+          "Name": "level",
+          "Description": "Revit.Elements.Level",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b47dc905609c476dbff70ae2b38b947a",
+          "Name": "string",
+          "Description": "string",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "The name of the level\n\nLevel.Name: string"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "NodeType": "CodeBlockNode",
+      "Code": "\"Level\";",
+      "Id": "e4483d4e4c734b53acdfca5ca9ea0da2",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "50257aa35fcc47ca836b468dcdd2242b",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "NodeType": "FunctionNode",
+      "FunctionSignature": "==@var[]..[],var[]..[]",
+      "Id": "f3ba591260174f2889ad2a931f542977",
+      "Inputs": [
+        {
+          "Id": "fea548505fb14348be6140306dbb5eda",
+          "Name": "x",
+          "Description": "x value.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2c9583329910422eb11dd18c791efe9c",
+          "Name": "y",
+          "Description": "y value.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "32d8c624e3594c1ab017d279604c01f4",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Auto",
+      "Description": "Equal x to y?\n\n== (x: var[]..[], y: var[]..[]): var[]..[]"
     }
   ],
   "Connectors": [
@@ -1063,6 +1239,11 @@
       "Id": "c5e1ddf8b2674efaa2fefda8956dbfd5"
     },
     {
+      "Start": "6c8ca167a9ed4d6fa54061d6d13002a5",
+      "End": "4bb563c5c89743a2b0fcb6fa6ce9c184",
+      "Id": "da98b12c05344b8fae914cb60bff8cdc"
+    },
+    {
       "Start": "bf3be9b5bc4040cd86e2f1fec8907800",
       "End": "62a3992e752644618e8f1d24a1e5a869",
       "Id": "42d6123ab73e47ec8a8dffd4ccaf6979"
@@ -1084,13 +1265,13 @@
     },
     {
       "Start": "9e28a53b75cd40b79cb84590915f9050",
-      "End": "f4fdbadadf6a4eb1958b8287842a33a5",
-      "Id": "f734db32b3a34a5b857a429298627d44"
+      "End": "a704a69a3c7f46169e538c09ac812dbd",
+      "Id": "f1bf9d0fb18c4be096a1b6e651601cdd"
     },
     {
       "Start": "9e28a53b75cd40b79cb84590915f9050",
-      "End": "16a23ed63a7042fc9a39ddc560fc97d1",
-      "Id": "f0750489bcd4421b91a51a5beef49c60"
+      "End": "03df83662b4d4866bb45791c3bc35f69",
+      "Id": "381e79e5f1d54a5fa7dc833920e3e471"
     },
     {
       "Start": "fc329351a0df458f92ded2e6120b5a93",
@@ -1138,25 +1319,62 @@
       "Id": "65b8ca033335492ebdc0bfa121213183"
     },
     {
-      "Start": "d045fec02ef6472a8955614ee8e85b8b",
+      "Start": "32c76506018e41e8a9a7f12ff2c69424",
       "End": "4e1607bb511c446890946410a4a93061",
       "Id": "425c3464254243b6a93e7e9b29fefc2d"
     },
     {
-      "Start": "d045fec02ef6472a8955614ee8e85b8b",
+      "Start": "32c76506018e41e8a9a7f12ff2c69424",
       "End": "d03a8669638d4abebbe5fafe691302e4",
       "Id": "4ef50f8cee234673b593c44654ec666c"
     },
     {
-      "Start": "d82ddb9d82bc43b38180ae0cd901d546",
+      "Start": "65a644f2052d460eb077dfec161d408b",
       "End": "7cd7a7eebd3a44b481e36ec681a7f5f3",
-      "Id": "6854648088cd4071ab20d8b63e02c10b"
+      "Id": "4687af4e421c4e0e9ceb3c11750ef125"
+    },
+    {
+      "Start": "84a80b479a494efeb881722c45f76f13",
+      "End": "fea548505fb14348be6140306dbb5eda",
+      "Id": "9a5de774305648569f2bf6fb97cb8aae"
+    },
+    {
+      "Start": "ced5aa6d6a9f4bad9f22f0584d31e898",
+      "End": "16a23ed63a7042fc9a39ddc560fc97d1",
+      "Id": "155a5aee18fe495286060630ee2a7af9"
+    },
+    {
+      "Start": "ced5aa6d6a9f4bad9f22f0584d31e898",
+      "End": "f4fdbadadf6a4eb1958b8287842a33a5",
+      "Id": "baa37e9ca0bd4f208b36427105239266"
+    },
+    {
+      "Start": "b47dc905609c476dbff70ae2b38b947a",
+      "End": "2c9583329910422eb11dd18c791efe9c",
+      "Id": "0337470458194907af5567625ed381f6"
+    },
+    {
+      "Start": "50257aa35fcc47ca836b468dcdd2242b",
+      "End": "6d5efdbbe6ff494cbc77cb5119c72a28",
+      "Id": "21d9c539d36a463ba53cca20e40095a1"
+    },
+    {
+      "Start": "32d8c624e3594c1ab017d279604c01f4",
+      "End": "c1f66cdc0e904396b3698abadad8ad4b",
+      "Id": "62c34af9b2774f4a9168af6951a643ac"
     }
   ],
   "Dependencies": [
     "55ed9563-df88-49b5-a540-63fdc3aa4b24"
   ],
-  "Bindings": [],
+  "Bindings": [
+    {
+      "NodeId": "6fe08ee2-3f01-40b3-97ed-1ea1eaf95b94",
+      "Binding": {
+        "ByOutlineTypeAndLevel_InClassDecl-1_InFunctionScope-1_Instance0_6fe08ee2-3f01-40b3-97ed-1ea1eaf95b94": "PFNPQVAtRU5WOkVudmVsb3BlIHhtbG5zOnhzaT0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEtaW5zdGFuY2UiIHhtbG5zOnhzZD0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOlNPQVAtRU5DPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VuY29kaW5nLyIgeG1sbnM6U09BUC1FTlY9Imh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3NvYXAvZW52ZWxvcGUvIiB4bWxuczpjbHI9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vc29hcC9lbmNvZGluZy9jbHIvMS4wIiBTT0FQLUVOVjplbmNvZGluZ1N0eWxlPSJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy9zb2FwL2VuY29kaW5nLyI+DQo8U09BUC1FTlY6Qm9keT4NCjxhMTpDYWxsU2l0ZV94MDAyQl9UcmFjZVNlcmlhbGlzZXJIZWxwZXIgaWQ9InJlZi0xIiB4bWxuczphMT0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS9jbHIvbnNhc3NlbS9Qcm90b0NvcmUvUHJvdG9Db3JlJTJDJTIwVmVyc2lvbiUzRDIuMC4yLjY4MjYlMkMlMjBDdWx0dXJlJTNEbmV1dHJhbCUyQyUyMFB1YmxpY0tleVRva2VuJTNEbnVsbCI+DQo8TnVtYmVyT2ZFbGVtZW50cz4xPC9OdW1iZXJPZkVsZW1lbnRzPg0KPEJhc2UtMF9IYXNEYXRhPmZhbHNlPC9CYXNlLTBfSGFzRGF0YT4NCjxCYXNlLTBfSGFzTmVzdGVkRGF0YT50cnVlPC9CYXNlLTBfSGFzTmVzdGVkRGF0YT4NCjxCYXNlLTBfTmVzdGVkRGF0YUNvdW50Pjk8L0Jhc2UtMF9OZXN0ZWREYXRhQ291bnQ+DQo8QmFzZS0wLTBfSGFzRGF0YT50cnVlPC9CYXNlLTAtMF9IYXNEYXRhPg0KPEJhc2UtMC0wX0RhdGEgaWQ9InJlZi0zIj5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaREE1UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hNemM4TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtMF9EYXRhPg0KPEJhc2UtMC0wX0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC0wX0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTFfSGFzRGF0YT50cnVlPC9CYXNlLTAtMV9IYXNEYXRhPg0KPEJhc2UtMC0xX0RhdGEgaWQ9InJlZi00Ij5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaREV4UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hORFU4TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtMV9EYXRhPg0KPEJhc2UtMC0xX0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC0xX0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTJfSGFzRGF0YT50cnVlPC9CYXNlLTAtMl9IYXNEYXRhPg0KPEJhc2UtMC0yX0RhdGEgaWQ9InJlZi01Ij5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaREU1UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hOVE04TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtMl9EYXRhPg0KPEJhc2UtMC0yX0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC0yX0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTNfSGFzRGF0YT50cnVlPC9CYXNlLTAtM19IYXNEYXRhPg0KPEJhc2UtMC0zX0RhdGEgaWQ9InJlZi02Ij5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaREl3UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hOakE4TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtM19EYXRhPg0KPEJhc2UtMC0zX0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC0zX0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTRfSGFzRGF0YT50cnVlPC9CYXNlLTAtNF9IYXNEYXRhPg0KPEJhc2UtMC00X0RhdGEgaWQ9InJlZi03Ij5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaREk1UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hOams4TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtNF9EYXRhPg0KPEJhc2UtMC00X0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC00X0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTVfSGFzRGF0YT50cnVlPC9CYXNlLTAtNV9IYXNEYXRhPg0KPEJhc2UtMC01X0RhdGEgaWQ9InJlZi04Ij5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaRE14UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hOemM4TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtNV9EYXRhPg0KPEJhc2UtMC01X0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC01X0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTZfSGFzRGF0YT50cnVlPC9CYXNlLTAtNl9IYXNEYXRhPg0KPEJhc2UtMC02X0RhdGEgaWQ9InJlZi05Ij5QRk5QUVZBdFJVNVdPa1Z1ZG1Wc2IzQmxJSGh0Ykc1ek9uaHphVDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRXRhVzV6ZEdGdVkyVWlJSGh0Ykc1ek9uaHpaRDBpYUhSMGNEb3ZMM2QzZHk1M015NXZjbWN2TWpBd01TOVlUVXhUWTJobGJXRWlJSGh0Ykc1ek9sTlBRVkF0UlU1RFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJZ2VHMXNibk02VTA5QlVDMUZUbFk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbmh0YkhOdllYQXViM0puTDNOdllYQXZaVzUyWld4dmNHVXZJaUI0Yld4dWN6cGpiSEk5SW1oMGRIQTZMeTl6WTJobGJXRnpMbTFwWTNKdmMyOW1kQzVqYjIwdmMyOWhjQzlsYm1OdlpHbHVaeTlqYkhJdk1TNHdJaUJUVDBGUUxVVk9WanBsYm1OdlpHbHVaMU4wZVd4bFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1NGJXeHpiMkZ3TG05eVp5OXpiMkZ3TDJWdVkyOWthVzVuTHlJK0RRbzhVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqeGhNVHBUWlhKcFlXeHBlbUZpYkdWSlpDQnBaRDBpY21WbUxURWlJSGh0Ykc1ek9tRXhQU0pvZEhSd09pOHZjMk5vWlcxaGN5NXRhV055YjNOdlpuUXVZMjl0TDJOc2NpOXVjMkZ6YzJWdEwxSmxkbWwwVTJWeWRtbGpaWE11VUdWeWMybHpkR1Z1WTJVdlVtVjJhWFJUWlhKMmFXTmxjeVV5UXlVeU1GWmxjbk5wYjI0bE0wUXlMakF1TWk0Mk9ETXpKVEpESlRJd1EzVnNkSFZ5WlNVelJHNWxkWFJ5WVd3bE1rTWxNakJRZFdKc2FXTkxaWGxVYjJ0bGJpVXpSRzUxYkd3aVBnMEtQSE4wY21sdVowbEVJR2xrUFNKeVpXWXRNeUkrTkdabVpqTTJPR0l0TWpZeE15MDBZakptTFRnME9EVXROMkpoT1daaVl6UXpNRFExTFRBd01ETXlaRE01UEM5emRISnBibWRKUkQ0TkNqeHBiblJKUkQ0eU1EZ3hPRFU4TDJsdWRFbEVQZzBLUEM5aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkQ0TkNqd3ZVMDlCVUMxRlRsWTZRbTlrZVQ0TkNqd3ZVMDlCVUMxRlRsWTZSVzUyWld4dmNHVStEUW89PC9CYXNlLTAtNl9EYXRhPg0KPEJhc2UtMC02X0hhc05lc3RlZERhdGE+ZmFsc2U8L0Jhc2UtMC02X0hhc05lc3RlZERhdGE+DQo8QmFzZS0wLTdfSGFzRGF0YT50cnVlPC9CYXNlLTAtN19IYXNEYXRhPg0KPEJhc2UtMC03X0RhdGEgaWQ9InJlZi0xMCI+UEZOUFFWQXRSVTVXT2tWdWRtVnNiM0JsSUhodGJHNXpPbmh6YVQwaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNUzlZVFV4VFkyaGxiV0V0YVc1emRHRnVZMlVpSUhodGJHNXpPbmh6WkQwaWFIUjBjRG92TDNkM2R5NTNNeTV2Y21jdk1qQXdNUzlZVFV4VFkyaGxiV0VpSUhodGJHNXpPbE5QUVZBdFJVNURQU0pvZEhSd09pOHZjMk5vWlcxaGN5NTRiV3h6YjJGd0xtOXlaeTl6YjJGd0wyVnVZMjlrYVc1bkx5SWdlRzFzYm5NNlUwOUJVQzFGVGxZOUltaDBkSEE2THk5elkyaGxiV0Z6TG5odGJITnZZWEF1YjNKbkwzTnZZWEF2Wlc1MlpXeHZjR1V2SWlCNGJXeHVjenBqYkhJOUltaDBkSEE2THk5elkyaGxiV0Z6TG0xcFkzSnZjMjltZEM1amIyMHZjMjloY0M5bGJtTnZaR2x1Wnk5amJISXZNUzR3SWlCVFQwRlFMVVZPVmpwbGJtTnZaR2x1WjFOMGVXeGxQU0pvZEhSd09pOHZjMk5vWlcxaGN5NTRiV3h6YjJGd0xtOXlaeTl6YjJGd0wyVnVZMjlrYVc1bkx5SStEUW84VTA5QlVDMUZUbFk2UW05a2VUNE5DanhoTVRwVFpYSnBZV3hwZW1GaWJHVkpaQ0JwWkQwaWNtVm1MVEVpSUhodGJHNXpPbUV4UFNKb2RIUndPaTh2YzJOb1pXMWhjeTV0YVdOeWIzTnZablF1WTI5dEwyTnNjaTl1YzJGemMyVnRMMUpsZG1sMFUyVnlkbWxqWlhNdVVHVnljMmx6ZEdWdVkyVXZVbVYyYVhSVFpYSjJhV05sY3lVeVF5VXlNRlpsY25OcGIyNGxNMFF5TGpBdU1pNDJPRE16SlRKREpUSXdRM1ZzZEhWeVpTVXpSRzVsZFhSeVlXd2xNa01sTWpCUWRXSnNhV05MWlhsVWIydGxiaVV6Ukc1MWJHd2lQZzBLUEhOMGNtbHVaMGxFSUdsa1BTSnlaV1l0TXlJK05HWm1aak0yT0dJdE1qWXhNeTAwWWpKbUxUZzBPRFV0TjJKaE9XWmlZelF6TURRMUxUQXdNRE15WkRReFBDOXpkSEpwYm1kSlJENE5DanhwYm5SSlJENHlNRGd4T1RNOEwybHVkRWxFUGcwS1BDOWhNVHBUWlhKcFlXeHBlbUZpYkdWSlpENE5Dand2VTA5QlVDMUZUbFk2UW05a2VUNE5Dand2VTA5QlVDMUZUbFk2Ulc1MlpXeHZjR1UrRFFvPTwvQmFzZS0wLTdfRGF0YT4NCjxCYXNlLTAtN19IYXNOZXN0ZWREYXRhPmZhbHNlPC9CYXNlLTAtN19IYXNOZXN0ZWREYXRhPg0KPEJhc2UtMC04X0hhc0RhdGE+dHJ1ZTwvQmFzZS0wLThfSGFzRGF0YT4NCjxCYXNlLTAtOF9EYXRhIGlkPSJyZWYtMTEiPlBGTlBRVkF0UlU1V09rVnVkbVZzYjNCbElIaHRiRzV6T25oemFUMGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TVM5WVRVeFRZMmhsYldFdGFXNXpkR0Z1WTJVaUlIaHRiRzV6T25oelpEMGlhSFIwY0RvdkwzZDNkeTUzTXk1dmNtY3ZNakF3TVM5WVRVeFRZMmhsYldFaUlIaHRiRzV6T2xOUFFWQXRSVTVEUFNKb2RIUndPaTh2YzJOb1pXMWhjeTU0Yld4emIyRndMbTl5Wnk5emIyRndMMlZ1WTI5a2FXNW5MeUlnZUcxc2JuTTZVMDlCVUMxRlRsWTlJbWgwZEhBNkx5OXpZMmhsYldGekxuaHRiSE52WVhBdWIzSm5MM052WVhBdlpXNTJaV3h2Y0dVdklpQjRiV3h1Y3pwamJISTlJbWgwZEhBNkx5OXpZMmhsYldGekxtMXBZM0p2YzI5bWRDNWpiMjB2YzI5aGNDOWxibU52WkdsdVp5OWpiSEl2TVM0d0lpQlRUMEZRTFVWT1ZqcGxibU52WkdsdVoxTjBlV3hsUFNKb2RIUndPaTh2YzJOb1pXMWhjeTU0Yld4emIyRndMbTl5Wnk5emIyRndMMlZ1WTI5a2FXNW5MeUkrRFFvOFUwOUJVQzFGVGxZNlFtOWtlVDROQ2p4aE1UcFRaWEpwWVd4cGVtRmliR1ZKWkNCcFpEMGljbVZtTFRFaUlIaHRiRzV6T21FeFBTSm9kSFJ3T2k4dmMyTm9aVzFoY3k1dGFXTnliM052Wm5RdVkyOXRMMk5zY2k5dWMyRnpjMlZ0TDFKbGRtbDBVMlZ5ZG1salpYTXVVR1Z5YzJsemRHVnVZMlV2VW1WMmFYUlRaWEoyYVdObGN5VXlReVV5TUZabGNuTnBiMjRsTTBReUxqQXVNaTQyT0RNekpUSkRKVEl3UTNWc2RIVnlaU1V6Ukc1bGRYUnlZV3dsTWtNbE1qQlFkV0pzYVdOTFpYbFViMnRsYmlVelJHNTFiR3dpUGcwS1BITjBjbWx1WjBsRUlHbGtQU0p5WldZdE15SStOR1ptWmpNMk9HSXRNall4TXkwMFlqSm1MVGcwT0RVdE4ySmhPV1ppWXpRek1EUTFMVEF3TURNeVpEUTVQQzl6ZEhKcGJtZEpSRDROQ2p4cGJuUkpSRDR5TURneU1ERThMMmx1ZEVsRVBnMEtQQzloTVRwVFpYSnBZV3hwZW1GaWJHVkpaRDROQ2p3dlUwOUJVQzFGVGxZNlFtOWtlVDROQ2p3dlUwOUJVQzFGVGxZNlJXNTJaV3h2Y0dVK0RRbz08L0Jhc2UtMC04X0RhdGE+DQo8QmFzZS0wLThfSGFzTmVzdGVkRGF0YT5mYWxzZTwvQmFzZS0wLThfSGFzTmVzdGVkRGF0YT4NCjwvYTE6Q2FsbFNpdGVfeDAwMkJfVHJhY2VTZXJpYWxpc2VySGVscGVyPg0KPC9TT0FQLUVOVjpCb2R5Pg0KPC9TT0FQLUVOVjpFbnZlbG9wZT4NCg=="
+      }
+    }
+  ],
   "View": {
     "Dynamo": {
       "ScaleFactor": 1.0,
@@ -1168,9 +1386,9 @@
     },
     "Camera": {
       "Name": "Background Preview",
-      "EyeX": -28954.001953125,
-      "EyeY": 15094.2529296875,
-      "EyeZ": -23983.595703125,
+      "EyeX": -26627.048709354429,
+      "EyeY": 49605.163506889556,
+      "EyeZ": -19331.383737595334,
       "LookX": 22293.353515625,
       "LookY": -5239.50390625,
       "LookZ": 27716.806640625,
@@ -1186,8 +1404,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4462.4971997962466,
-        "Y": 796.69603310015646
+        "X": 4356.3319801149373,
+        "Y": 591.892365293698
       },
       {
         "ShowGeometry": true,
@@ -1196,8 +1414,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 503.60871843885843,
-        "Y": 563.04533553237536
+        "X": 639.632563170493,
+        "Y": 555.83211286679023
       },
       {
         "ShowGeometry": true,
@@ -1206,8 +1424,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3430.0639804790262,
-        "Y": 1008.7433891483977
+        "X": 3202.8954894020058,
+        "Y": 1278.6710522494702
       },
       {
         "ShowGeometry": true,
@@ -1216,8 +1434,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 900.97887760100889,
-        "Y": 792.48489082049127
+        "X": 401.82817432395223,
+        "Y": 816.56098174676652
       },
       {
         "ShowGeometry": true,
@@ -1226,8 +1444,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 749.44414869302182,
-        "Y": 841.451341205709
+        "X": 213.82817432395223,
+        "Y": 846.77431508009988
       },
       {
         "ShowGeometry": true,
@@ -1236,8 +1454,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1521.8440160405319,
-        "Y": 831.66503955714825
+        "X": 1033.0281743239523,
+        "Y": 842.56098174676652
       },
       {
         "ShowGeometry": true,
@@ -1246,8 +1464,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1263.6939133913058,
-        "Y": 954.81724330378211
+        "X": 764.22817432395232,
+        "Y": 868.56098174676652
       },
       {
         "ShowGeometry": true,
@@ -1256,8 +1474,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1074.1276323724749,
-        "Y": 1002.7894555359835
+        "X": 401.82817432395223,
+        "Y": 950.77431508009988
       },
       {
         "ShowGeometry": true,
@@ -1266,8 +1484,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4825.2731862407863,
-        "Y": 797.99315523876544
+        "X": 4709.1319801149375,
+        "Y": 656.892365293698
       },
       {
         "ShowGeometry": true,
@@ -1276,8 +1494,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4450.2771031672173,
-        "Y": 1056.0211852010605
+        "X": 4356.3319801149373,
+        "Y": 752.10569862703142
       },
       {
         "ShowGeometry": true,
@@ -1286,8 +1504,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 107.91271789338452,
-        "Y": 563.44490243817643
+        "X": 102.83256317049302,
+        "Y": 560.04544620012359
       },
       {
         "ShowGeometry": true,
@@ -1296,28 +1514,28 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 270.69846362466546,
-        "Y": 564.21863136138541
+        "X": 332.43256317049304,
+        "Y": 555.83211286679023
       },
       {
         "ShowGeometry": true,
-        "Name": "OFFSET FROM LEVEL",
+        "Name": "Offset from Level",
         "Id": "175f1d09f0c2492097c25d825f4aefa5",
         "IsSetAsInput": true,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -428.94486848183567,
-        "Y": 720.89014929891721
+        "X": -428.944868481836,
+        "Y": 720.890149298917
       },
       {
         "ShowGeometry": true,
-        "Name": "Levels",
+        "Name": "Level to Place Floor Finish",
         "Id": "42969e4fbe6145d58aef87e45071a775",
         "IsSetAsInput": true,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": -441.58806836398537,
-        "Y": 611.67392021518629
+        "X": -441.588068363985,
+        "Y": 611.673920215186
       },
       {
         "ShowGeometry": true,
@@ -1326,8 +1544,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 1791.6095359864689,
-        "Y": 847.090734233231
+        "X": 1332.3799611298114,
+        "Y": 848.30112537872
       },
       {
         "ShowGeometry": true,
@@ -1336,8 +1554,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2004.95228604438,
-        "Y": 803.24826181550122
+        "X": 1585.9799611298113,
+        "Y": 818.08779204538666
       },
       {
         "ShowGeometry": true,
@@ -1346,8 +1564,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2186.2124131531773,
-        "Y": 939.45007651439164
+        "X": 1585.9799611298113,
+        "Y": 952.30112537872
       },
       {
         "ShowGeometry": true,
@@ -1356,8 +1574,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2336.2866858353518,
-        "Y": 873.97496162159325
+        "X": 1948.3799611298114,
+        "Y": 870.08779204538666
       },
       {
         "ShowGeometry": true,
@@ -1366,8 +1584,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2602.0613166770595,
-        "Y": 801.17264066535233
+        "X": 2217.1799611298111,
+        "Y": 844.08779204538666
       },
       {
         "ShowGeometry": true,
@@ -1376,8 +1594,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3103.5804748933188,
-        "Y": 1009.5856017338094
+        "X": 2840.4954894020057,
+        "Y": 1278.6710522494702
       },
       {
         "ShowGeometry": true,
@@ -1386,18 +1604,18 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2853.437808956262,
-        "Y": 1039.7475980322267
+        "X": 2586.8954894020058,
+        "Y": 1308.8843855828036
       },
       {
-        "ShowGeometry": true,
+        "ShowGeometry": false,
         "Name": "Element.Faces",
         "Id": "e84ed9f7daf344e9b0b29b675b91a255",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2845.2798132671669,
-        "Y": 630.946249832406
+        "X": 2582.5788371425419,
+        "Y": 971.53113256702545
       },
       {
         "ShowGeometry": true,
@@ -1406,8 +1624,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3383.8418401157528,
-        "Y": 677.34927944345407
+        "X": 3199.3788371425421,
+        "Y": 1010.5311325670255
       },
       {
         "ShowGeometry": false,
@@ -1416,8 +1634,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3125.4811649143048,
-        "Y": 676.52747713220094
+        "X": 2904.97883714254,
+        "Y": 1010.53113256703
       },
       {
         "ShowGeometry": false,
@@ -1426,8 +1644,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3625.5719684473356,
-        "Y": 588.714498362975
+        "X": 3492.1788371425423,
+        "Y": 984.53113256702545
       },
       {
         "ShowGeometry": true,
@@ -1436,18 +1654,18 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 4092.3505046986993,
-        "Y": 589.13361915962537
+        "X": 4070.5788371425419,
+        "Y": 984.53113256702545
       },
       {
-        "ShowGeometry": false,
+        "ShowGeometry": true,
         "Name": "List.FirstItem",
         "Id": "0ff7a61bd95446c3adbf0b7e6561c6d2",
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 3885.6873590276346,
-        "Y": 587.56629722927232
+        "X": 3807.3788371425421,
+        "Y": 984.53113256702545
       },
       {
         "ShowGeometry": true,
@@ -1456,8 +1674,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 2983.2431896557823,
-        "Y": 730.314820542344
+        "X": 2582.5788371425419,
+        "Y": 1079.7444659003586
       },
       {
         "ShowGeometry": true,
@@ -1466,8 +1684,8 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 5673.0429616415386,
-        "Y": 844.45018133407461
+        "X": 5434.0481476081222,
+        "Y": 663.83519170848854
       },
       {
         "ShowGeometry": true,
@@ -1476,8 +1694,58 @@
         "IsSetAsInput": false,
         "IsSetAsOutput": false,
         "Excluded": false,
-        "X": 5152.7157373325481,
-        "Y": 932.83530674358053
+        "X": 5047.6481476081226,
+        "Y": 694.0485250418219
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Element.GetParameterValueByName",
+        "Id": "293fb40fba854adcb6b2cdbde3a0d108",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1582.3499999590622,
+        "Y": 1136.0301944736641
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "List.FilterByBoolMask",
+        "Id": "d3dffd2ed53641549a175014e37e4359",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 2213.5499999590625,
+        "Y": 1164.0301944736641
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Level.Name",
+        "Id": "36f658ee5be84a0fab79e5c0f957f001",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1582.3499999590622,
+        "Y": 1270.0301944736641
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "Code Block",
+        "Id": "e4483d4e4c734b53acdfca5ca9ea0da2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1386.3499999590622,
+        "Y": 1166.2435278069975
+      },
+      {
+        "ShowGeometry": true,
+        "Name": "==",
+        "Id": "f3ba591260174f2889ad2a931f542977",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "X": 1944.7499999590623,
+        "Y": 1190.0301944736641
       }
     ],
     "Annotations": [
@@ -1488,13 +1756,13 @@
           "a27124ffe29c4d898f00c53d3e13422e"
         ],
         "Left": -1055.9519002426478,
-        "Top": -221.18440430358913,
-        "Width": 326.0,
-        "Height": 429.0,
+        "Top": -220.98440430358914,
+        "Width": 325.6,
+        "Height": 428.8,
         "FontSize": 36.0,
         "InitialTop": -38.184404303589133,
         "InitialHeight": 140.0,
-        "TextblockHeight": 173.0,
+        "TextblockHeight": 172.8,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1504,13 +1772,13 @@
           "16bdb1b4929446f7bc41446e1c9f748e"
         ],
         "Left": -1053.6788743433556,
-        "Top": 234.14320173351132,
-        "Width": 326.0,
-        "Height": 213.0,
+        "Top": 233.94320173351133,
+        "Width": 325.6,
+        "Height": 212.79999999999998,
         "FontSize": 36.0,
         "InitialTop": 287.14320173351132,
         "InitialHeight": 140.0,
-        "TextblockHeight": 43.0,
+        "TextblockHeight": 43.2,
         "Background": "#FFB9F9E1"
       },
       {
@@ -1521,19 +1789,19 @@
           "2f4c688e31e34426b8d7d29635313f88",
           "fb9dabc368794946b60e275b4c27a818"
         ],
-        "Left": 97.912717893384524,
-        "Top": 531.04533553237536,
-        "Width": 589.69600054547391,
-        "Height": 126.17329582901004,
+        "Left": 92.832563170493017,
+        "Top": 524.2321128667902,
+        "Width": 731.19999999999993,
+        "Height": 128.41333333333338,
         "FontSize": 18.0,
-        "InitialTop": 563.04533553237536,
-        "InitialHeight": 124.17329582901,
-        "TextblockHeight": 22.0,
+        "InitialTop": 555.83211286679023,
+        "InitialHeight": 149.21333333333337,
+        "TextblockHeight": 21.6,
         "Background": "#FFA4E1FF"
       },
       {
         "Id": "906b2506c3eb4868b32336c6104352a5",
-        "Title": "FILTER NO PLACED ROOMS ",
+        "Title": "FILTER NON PLACED ROOMS ",
         "Nodes": [
           "33fb602a746c4784ac5478bf518b7d6f",
           "8ebdcedf15c14005b80e815c7d218c26",
@@ -1541,14 +1809,14 @@
           "47ff6091019240d1b250bd9ad4ec4dcd",
           "2b0b388802ee44368857d46d41fae892"
         ],
-        "Left": 739.44414869302182,
-        "Top": 760.48489082049127,
-        "Width": 963.39986734751,
-        "Height": 335.30456471549223,
+        "Left": 203.82817432395223,
+        "Top": 784.96098174676649,
+        "Width": 1010.4000000000001,
+        "Height": 258.41333333333341,
         "FontSize": 18.0,
-        "InitialTop": 792.48489082049127,
-        "InitialHeight": 500.159329975058,
-        "TextblockHeight": 22.0,
+        "InitialTop": 816.56098174676652,
+        "InitialHeight": 279.21333333333337,
+        "TextblockHeight": 21.6,
         "Background": "#FFA4E1FF"
       },
       {
@@ -1559,19 +1827,19 @@
           "6a9e28703c3741d3806c8454668713cd",
           "dfe5efd84534458d8d2bed74d2a7bfa9"
         ],
-        "Left": 4440.2771031672173,
-        "Top": 764.69603310015646,
-        "Width": 664.996083073569,
-        "Height": 384.325152100904,
+        "Left": 4346.3319801149373,
+        "Top": 560.292365293698,
+        "Width": 641.60000000000014,
+        "Height": 284.41333333333341,
         "FontSize": 18.0,
-        "InitialTop": 796.69603310015646,
-        "InitialHeight": 309.534757182635,
-        "TextblockHeight": 22.0,
+        "InitialTop": 591.892365293698,
+        "InitialHeight": 305.21333333333337,
+        "TextblockHeight": 21.6,
         "Background": "#FFFFB8D8"
       },
       {
         "Id": "a151feb98b354426812776bb3b451bf9",
-        "Title": "LEVEL AND OFFSET OF THE FINISHES",
+        "Title": "LEVEL AND OFFSET OF THE FLOOR FINISHES",
         "Nodes": [
           "175f1d09f0c2492097c25d825f4aefa5",
           "42969e4fbe6145d58aef87e45071a775",
@@ -1579,13 +1847,186 @@
         ],
         "Left": -598.144625755868,
         "Top": 511.865711643463,
-        "Width": 316.19975727403232,
-        "Height": 277.02443765545422,
+        "Width": 337.756557391883,
+        "Height": 276.824437655454,
         "FontSize": 14.0,
         "InitialTop": 541.865711643463,
-        "InitialHeight": 196.469461806034,
+        "InitialHeight": 324.024437655454,
         "TextblockHeight": 20.0,
         "Background": "#FFC1D676"
+      },
+      {
+        "Id": "974dc8e37a0843de8d54687ad69cb080",
+        "Title": "GROUP FLOOR ELEMENTS ",
+        "Nodes": [
+          "de1bffaa89e844e29bf5541f11fd16cb",
+          "c3d059c6fcca4b519b337cd7ff728676",
+          "12d100b8fb5c445cb4f3f2f98b966e8c"
+        ],
+        "Left": 5037.6481476081226,
+        "Top": 587.86030217872542,
+        "Width": 731.20000000000016,
+        "Height": 198.78822286309648,
+        "FontSize": 18.0,
+        "InitialTop": 619.46030217872544,
+        "InitialHeight": 219.58822286309646,
+        "TextblockHeight": 21.6,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "f516b78568e14d76a58caa528052e6d0",
+        "Title": "DESIGN",
+        "Nodes": [
+          "a17d7bf56f004001bbcb592798edda15"
+        ],
+        "Left": 96.482581526943932,
+        "Top": 325.40298396840137,
+        "Width": 188.0,
+        "Height": 112.00000000000003,
+        "FontSize": 48.0,
+        "InitialTop": 393.0029839684014,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 57.6,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "5f762b25892449c2bc82974b1812fc57",
+        "Title": "USER INTERFACE",
+        "Nodes": [
+          "840b6e05da8145fc811f52a738281742"
+        ],
+        "Left": -666.9549454488581,
+        "Top": 332.80349986044541,
+        "Width": 391.2,
+        "Height": 112.00000000000003,
+        "FontSize": 48.0,
+        "InitialTop": 400.40349986044544,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 57.6,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "8097c4a1aa9d431cab3e1b94bfcfe926",
+        "Title": "WIP",
+        "Nodes": [
+          "e96898be0ed94433986c89bacb0c22f5",
+          "556dddf86e7c40d1be2220826858942c"
+        ],
+        "Left": 541.33957703532508,
+        "Top": 2.1455252880285087,
+        "Width": 212.80000000000004,
+        "Height": 213.6212157996016,
+        "FontSize": 36.0,
+        "InitialTop": 55.345525288028512,
+        "InitialHeight": 227.22121579960162,
+        "TextblockHeight": 43.2,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "40befd2c9250490b95bb4a1e06ae68a7",
+        "Title": "COMMENTS",
+        "Nodes": [
+          "bfb959ba7ed24eeba5aa034cf7ee6c23",
+          "81240706543a4ebabc1dff8ead862153"
+        ],
+        "Left": 167.28269360325078,
+        "Top": 1.0168498167833349,
+        "Width": 356.61568103982296,
+        "Height": 213.44466648221487,
+        "FontSize": 36.0,
+        "InitialTop": 54.216849816783338,
+        "InitialHeight": 241.44466648221487,
+        "TextblockHeight": 43.2,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "a5d4cf5f857d44888a6fa7dec978d3d9",
+        "Title": "TO REVIT",
+        "Nodes": [
+          "bf9060bf8c1d4b2b9283bd8cf8315794",
+          "5c2b951f049f4ab7b56b337be5bd30ac"
+        ],
+        "Left": -19.186501588438546,
+        "Top": 1.6133037537903618,
+        "Width": 167.45399193257603,
+        "Height": 212.2861254828,
+        "FontSize": 36.0,
+        "InitialTop": 54.813303753790365,
+        "InitialHeight": 225.88612548280003,
+        "TextblockHeight": 43.2,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "157ae65be41645528e5a9b63d628c780",
+        "Title": "DESIGN",
+        "Nodes": [
+          "716fee32a15c46f0b8f4d10ae28792a2",
+          "f24b73ffb29247858a3e32d470d3b997"
+        ],
+        "Left": -378.07926539483992,
+        "Top": 0.41188574089646579,
+        "Width": 336.77615660154163,
+        "Height": 211.43610499129545,
+        "FontSize": 36.0,
+        "InitialTop": 53.611885740896469,
+        "InitialHeight": 239.43610499129545,
+        "TextblockHeight": 43.2,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "cc114ac2f15340f1bdfbc65577407552",
+        "Title": "INPUT",
+        "Nodes": [
+          "27b67c2c646f4a7790a24b3711bb7e03",
+          "9540f2cc0fbf4177bf09d1bd736f168b"
+        ],
+        "Left": -663.41282407235906,
+        "Top": -1.3677441901404137,
+        "Width": 264.2537347721526,
+        "Height": 209.71525247810712,
+        "FontSize": 36.0,
+        "InitialTop": 51.832255809859589,
+        "InitialHeight": 223.31525247810714,
+        "TextblockHeight": 43.2,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "595434166b564a09ac3a0c829fd26178",
+        "Title": "GET FLOOR TYPE FROM THE MODEL",
+        "Nodes": [
+          "7e0f46c15d794c9888276137d2455728",
+          "30c5427a44ed4bb491228efe284f377d",
+          "edeb0b0e6e0a4f4e90b33607d5d231aa"
+        ],
+        "Left": 2576.8954894020058,
+        "Top": 1247.0710522494703,
+        "Width": 848.8,
+        "Height": 154.41333333333327,
+        "FontSize": 18.0,
+        "InitialTop": 1278.6710522494702,
+        "InitialHeight": 175.21333333333337,
+        "TextblockHeight": 21.6,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "190e9c14ecf548d0a079307782c72145",
+        "Title": "FILTER ROOMS WITHOUT A FLOOR FINISH ASSIGNED",
+        "Nodes": [
+          "2aec753db13440d09f9b4ea20a6eb8ad",
+          "ac083e6718114153ab7a178ffda4d93a",
+          "bc8cd17166d9467891c88adfc1ae435d",
+          "50e98c8d211f4f35a90b92754e3b494a",
+          "21d2fdd3bf9340ac8d6a13f5ddcae528"
+        ],
+        "Left": 1322.3799611298114,
+        "Top": 786.48779204538664,
+        "Width": 1075.9999999999998,
+        "Height": 258.41333333333341,
+        "FontSize": 18.0,
+        "InitialTop": 818.08779204538666,
+        "InitialHeight": 279.21333333333337,
+        "TextblockHeight": 21.6,
+        "Background": "#FFA4E1FF"
       },
       {
         "Id": "1978670e3fba49278656aa99f43db592",
@@ -1599,192 +2040,39 @@
           "0ff7a61bd95446c3adbf0b7e6561c6d2",
           "7fe2aaa39a3e4ed39a916424c661690a"
         ],
-        "Left": 2835.2798132671669,
-        "Top": 555.56629722927232,
-        "Width": 1475.0706914315324,
-        "Height": 267.7485233130717,
+        "Left": 2572.5788371425419,
+        "Top": 939.93113256702543,
+        "Width": 1715.2,
+        "Height": 232.41333333333316,
         "FontSize": 18.0,
-        "InitialTop": 587.56629722927232,
-        "InitialHeight": 241.723154184946,
-        "TextblockHeight": 22.0,
+        "InitialTop": 971.53113256702545,
+        "InitialHeight": 253.21333333333314,
+        "TextblockHeight": 21.6,
         "Background": "#FFA4E1FF"
       },
       {
-        "Id": "974dc8e37a0843de8d54687ad69cb080",
-        "Title": "GROUP FLOOR ELEMENTS ",
+        "Id": "24042f5da676497e838e82b05b594632",
+        "Title": "FILTER ROOMS BY LEVEL",
         "Nodes": [
-          "de1bffaa89e844e29bf5541f11fd16cb",
-          "c3d059c6fcca4b519b337cd7ff728676",
-          "12d100b8fb5c445cb4f3f2f98b966e8c"
+          "293fb40fba854adcb6b2cdbde3a0d108",
+          "d3dffd2ed53641549a175014e37e4359",
+          "f3ba591260174f2889ad2a931f542977",
+          "e4483d4e4c734b53acdfca5ca9ea0da2",
+          "36f658ee5be84a0fab79e5c0f957f001"
         ],
-        "Left": 5142.7157373325481,
-        "Top": 766.71112153956824,
-        "Width": 866.32722430899048,
-        "Height": 259.12418520401229,
+        "Left": 1376.3499999590622,
+        "Top": 1104.4301944736642,
+        "Width": 1018.4000000000003,
+        "Height": 258.19999999999993,
         "FontSize": 18.0,
-        "InitialTop": 798.71112153956824,
-        "InitialHeight": 211.385125409505,
-        "TextblockHeight": 22.0,
-        "Background": "#FFFFB8D8"
-      },
-      {
-        "Id": "f516b78568e14d76a58caa528052e6d0",
-        "Title": "DESIGN",
-        "Nodes": [
-          "a17d7bf56f004001bbcb592798edda15"
-        ],
-        "Left": 96.482581526943932,
-        "Top": 325.0029839684014,
-        "Width": 188.0,
-        "Height": 112.0,
-        "FontSize": 48.0,
-        "InitialTop": 393.0029839684014,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 58.0,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "5f762b25892449c2bc82974b1812fc57",
-        "Title": "USER INTERFACE",
-        "Nodes": [
-          "840b6e05da8145fc811f52a738281742"
-        ],
-        "Left": -666.9549454488581,
-        "Top": 332.40349986044544,
-        "Width": 391.0,
-        "Height": 112.0,
-        "FontSize": 48.0,
-        "InitialTop": 400.40349986044544,
-        "InitialHeight": 140.0,
-        "TextblockHeight": 58.0,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "8097c4a1aa9d431cab3e1b94bfcfe926",
-        "Title": "WIP",
-        "Nodes": [
-          "e96898be0ed94433986c89bacb0c22f5",
-          "556dddf86e7c40d1be2220826858942c"
-        ],
-        "Left": 541.33957703532508,
-        "Top": 2.3455252880285116,
-        "Width": 213.0,
-        "Height": 213.22121579960162,
-        "FontSize": 36.0,
-        "InitialTop": 55.345525288028512,
-        "InitialHeight": 227.22121579960162,
-        "TextblockHeight": 43.0,
-        "Background": "#FFFFC999"
-      },
-      {
-        "Id": "40befd2c9250490b95bb4a1e06ae68a7",
-        "Title": "COMMENTS",
-        "Nodes": [
-          "bfb959ba7ed24eeba5aa034cf7ee6c23",
-          "81240706543a4ebabc1dff8ead862153"
-        ],
-        "Left": 167.28269360325078,
-        "Top": 1.2168498167833377,
-        "Width": 356.61568103982296,
-        "Height": 213.44466648221487,
-        "FontSize": 36.0,
-        "InitialTop": 54.216849816783338,
-        "InitialHeight": 241.44466648221487,
-        "TextblockHeight": 43.0,
-        "Background": "#FFB9F9E1"
-      },
-      {
-        "Id": "a5d4cf5f857d44888a6fa7dec978d3d9",
-        "Title": "TO REVIT",
-        "Nodes": [
-          "bf9060bf8c1d4b2b9283bd8cf8315794",
-          "5c2b951f049f4ab7b56b337be5bd30ac"
-        ],
-        "Left": -19.186501588438546,
-        "Top": 1.8133037537903647,
-        "Width": 167.85399193257604,
-        "Height": 211.88612548280003,
-        "FontSize": 36.0,
-        "InitialTop": 54.813303753790365,
-        "InitialHeight": 225.88612548280003,
-        "TextblockHeight": 43.0,
-        "Background": "#FFFFB8D8"
-      },
-      {
-        "Id": "157ae65be41645528e5a9b63d628c780",
-        "Title": "DESIGN",
-        "Nodes": [
-          "716fee32a15c46f0b8f4d10ae28792a2",
-          "f24b73ffb29247858a3e32d470d3b997"
-        ],
-        "Left": -378.07926539483992,
-        "Top": 0.61188574089646863,
-        "Width": 337.17615660154166,
-        "Height": 211.43610499129545,
-        "FontSize": 36.0,
-        "InitialTop": 53.611885740896469,
-        "InitialHeight": 239.43610499129545,
-        "TextblockHeight": 43.0,
-        "Background": "#FFA4E1FF"
-      },
-      {
-        "Id": "cc114ac2f15340f1bdfbc65577407552",
-        "Title": "INPUT",
-        "Nodes": [
-          "27b67c2c646f4a7790a24b3711bb7e03",
-          "9540f2cc0fbf4177bf09d1bd736f168b"
-        ],
-        "Left": -663.41282407235906,
-        "Top": -1.1677441901404109,
-        "Width": 264.85373477215262,
-        "Height": 209.31525247810714,
-        "FontSize": 36.0,
-        "InitialTop": 51.832255809859589,
-        "InitialHeight": 223.31525247810714,
-        "TextblockHeight": 43.0,
-        "Background": "#FFC1D676"
-      },
-      {
-        "Id": "595434166b564a09ac3a0c829fd26178",
-        "Title": "GET FLOOR TYPE FROM THE MODEL",
-        "Nodes": [
-          "7e0f46c15d794c9888276137d2455728",
-          "30c5427a44ed4bb491228efe284f377d",
-          "edeb0b0e6e0a4f4e90b33607d5d231aa"
-        ],
-        "Left": 2843.437808956262,
-        "Top": 976.74338914839768,
-        "Width": 810.62617152276425,
-        "Height": 156.00420888382905,
-        "FontSize": 18.0,
-        "InitialTop": 1008.7433891483977,
-        "InitialHeight": 154.00420888382916,
-        "TextblockHeight": 22.0,
-        "Background": "#FFA4E1FF"
-      },
-      {
-        "Id": "190e9c14ecf548d0a079307782c72145",
-        "Title": "FILTER ROOMS THAT DON´T HAVE A FLOOR FINISH ASSIGNED",
-        "Nodes": [
-          "2aec753db13440d09f9b4ea20a6eb8ad",
-          "ac083e6718114153ab7a178ffda4d93a",
-          "bc8cd17166d9467891c88adfc1ae435d",
-          "50e98c8d211f4f35a90b92754e3b494a",
-          "21d2fdd3bf9340ac8d6a13f5ddcae528"
-        ],
-        "Left": 1781.6095359864689,
-        "Top": 769.17264066535233,
-        "Width": 1001.4517806905906,
-        "Height": 263.27743584903931,
-        "FontSize": 18.0,
-        "InitialTop": 801.17264066535233,
-        "InitialHeight": 261.27743584903942,
-        "TextblockHeight": 22.0,
+        "InitialTop": 1136.0301944736641,
+        "InitialHeight": 279.0,
+        "TextblockHeight": 21.6,
         "Background": "#FFA4E1FF"
       },
       {
         "Id": "a27124ffe29c4d898f00c53d3e13422e",
-        "Title": "                                                                                       \r\nCREATED BY:\r\nCREATED: 2018.08.15\r\nVERSION: 2.0\r\nLAST EDITED: 2019.01.15\r\n\r\nDYNAMO VERSION: Dynamo 2.0\r\n\r\nPACKAGES:\r\nClockwork\r\n\r\nNOTES:\r\nRooms that don´t have Floor Finish assigned will be excluded from creating floors automatically\r\n",
+        "Title": "                                                                                       \r\nCREATED BY:\r\nCREATED: 2018.08.15\r\nVERSION: 2.0\r\nLAST EDITED: 2019.01.15\r\n\r\nDYNAMO VERSION: Dynamo 2.0\r\n\r\nPACKAGES:\r\nClockwork\r\n\r\nNOTES:\r\nRooms that don´t have Floor Finish assigned or 'islands' inside will be excluded. \r\n",
         "Nodes": [],
         "Left": -1045.9519002426478,
         "Top": -38.184404303589133,
@@ -1982,8 +2270,8 @@
         "Id": "12d100b8fb5c445cb4f3f2f98b966e8c",
         "Title": "Clockwork",
         "Nodes": [],
-        "Left": 5794.4575358409375,
-        "Top": 798.71112153956824,
+        "Left": 5557.176663469756,
+        "Top": 619.46030217872544,
         "Width": 0.0,
         "Height": 0.0,
         "FontSize": 36.0,
@@ -2007,8 +2295,8 @@
         "Background": "#FFC1D676"
       }
     ],
-    "X": 293.42561926068242,
-    "Y": 232.21688244878294,
-    "Zoom": 0.32026358026110174
+    "X": -1005.9144236255595,
+    "Y": -161.63036964087644,
+    "Zoom": 0.50397158510457429
   }
 }
