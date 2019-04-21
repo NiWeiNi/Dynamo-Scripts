@@ -1,0 +1,867 @@
+{
+  "Uuid": "3c9d0464-8643-5ffe-96e5-ab1769818209",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "Matrix Along Curve Pyhton",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "888d706f6ea8425d80a8c7549a086d8a",
+      "Name": "Name for the Group",
+      "Type": "string",
+      "Value": "MATRIX GROUP 1",
+      "Description": "Creates a string."
+    },
+    {
+      "Id": "677b6d78254b4da5b3dc7dc045b7c27f",
+      "Name": "Number of Elements",
+      "Type": "number",
+      "Value": "20",
+      "MaximumValue": 1500.0,
+      "MinimumValue": 0.0,
+      "StepValue": 1.0,
+      "NumberType": "Integer",
+      "Description": "A slider that produces integer values."
+    }
+  ],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "DSRevitNodesUI.FamilyTypes, DSRevitNodesUI",
+      "SelectedIndex": 71,
+      "NodeType": "ExtensionNode",
+      "Id": "d64df23d59bb463791523e10de2ce5c7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "787d517fed704d1e9016e14f29d5c431",
+          "Name": "Family Type",
+          "Description": "The selected Family Type",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "All family types available in the document."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.Levels, DSRevitNodesUI",
+      "SelectedIndex": 0,
+      "NodeType": "ExtensionNode",
+      "Id": "1efdc3bde2fd45ceba9ba0cafe77331d",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6101300427644079ad682df11b44ea9a",
+          "Name": "Levels",
+          "Description": "The selected Levels",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Select a level in the active document"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "NodeType": "StringInputNode",
+      "InputValue": "MATRIX GROUP 1",
+      "Id": "888d706f6ea8425d80a8c7549a086d8a",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "28c7900e2e1d486fadc90b8fb9ec7503",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.IntegerSlider, CoreNodeModels",
+      "NodeType": "NumberInputNode",
+      "NumberType": "Integer",
+      "InputValue": 20,
+      "MaximumValue": 1500,
+      "MinimumValue": 0,
+      "StepValue": 1,
+      "Id": "677b6d78254b4da5b3dc7dc045b7c27f",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "783849a4722d44049096dfe755a168fa",
+          "Name": "",
+          "Description": "Int32",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "A slider that produces integer values."
+    },
+    {
+      "ConcreteType": "Dynamo.Nodes.DSModelElementSelection, DSRevitNodesUI",
+      "NodeType": "ExtensionNode",
+      "InstanceId": [
+        "f73065bd-9e1e-452c-b7be-2048fae17dc7-00033f40"
+      ],
+      "Id": "bebd2398f5854d2bb5ba9511480ec3b7",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1498900aba8c4db8a2d0944ef6757e40",
+          "Name": "Element",
+          "Description": "The selected elements.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Import math module to transform degrees to radians\r\nimport math\r\n\r\n# Import commom language runtime and required libraries\r\nimport clr\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import FilteredElementCollector, ElementTransformUtils, ElementId\r\nfrom Autodesk.Revit.DB.Structure import StructuralType\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import Vector, Line\r\n\r\nclr.AddReference('System')\r\nfrom System.Collections.Generic import List\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\n# Create variables to store current document\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\n# IN variables\r\n# Get the underlaying geometry of the modelcurve\r\ncurve = IN[0].Curve\r\n# Unwrap Revit elements so Dynamo can use it\r\nfamilyInstance = UnwrapElement(IN[1])\r\nlevel = UnwrapElement(IN[2])\r\ngroupname = IN[3]\r\nnumberElements = IN[4]\r\n\r\n# Check start and end points of the curve\r\nstartPoint = curve.StartPoint\r\nendPoint = curve.EndPoint\r\n\r\n# Divide curve\r\ndividedCurve = curve.PointsAtEqualSegmentLength(numberElements)\r\n\r\n# Division points of the curve\r\nfinalCurve = list()\r\n\r\n# Check if the strings of startPoint and endPoint are the same\r\nif str(startPoint) == str(endPoint):\r\n\t# Closed curve, it needs only to add the start point\r\n\tfinalCurve.append(startPoint)\r\n\tfor el in dividedCurve:\r\n\t\tfinalCurve.append(el)\r\nelse:\r\n\t# Open curve, needs both start and end points\r\n\tfinalCurve.append(startPoint)\r\n\tfor el in dividedCurve:\r\n\t\tfinalCurve.append(el)\r\n\tfinalCurve.append(endPoint)\r\n\r\n# Create a list with tangent vectors to the curve at the division points\r\ntangVector = list()\r\n\r\nfor point in finalCurve:\r\n\ttangVector.append(curve.TangentAtParameter(curve.ParameterAtPoint(point)))\r\n\t\r\n# Create a list with the angle between the tangent vector and the curve\tin radians\r\nangleRot = list()\r\nvectorX = Vector.XAxis()\r\nvectorZ = Vector.ZAxis()\r\n\r\nfor vec in tangVector:\r\n\tangleRot.append(-vec.AngleAboutAxis(vectorX, vectorZ) * math.pi/180)\r\n\r\n# Open transaction to place all the family instances\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\n\r\ninstances = list()\r\ni = 0\r\n\r\nfor point in finalCurve:\r\n\t# Define line as axis of rotation\r\n\tvec = Line.ByStartPointDirectionLength(point, vectorZ, 1).ToRevitType()\r\n\t# Instantiate family\r\n\tinstance = doc.Create.NewFamilyInstance(point.ToXyz(), familyInstance, StructuralType.NonStructural)\r\n\t# Rotate family instances\r\n\tElementTransformUtils.RotateElement(doc, instance.Id, vec, angleRot[i])\r\n\t\r\n\ti += 1\r\n\t# Create list of elements id \r\n\tinstances.append(instance.Id)\r\n\r\n# Create an equivalent of ICollection of ids\r\nitems = List[ElementId](instances)\r\n\r\n# Try to create the group, return empty list in case it fails\r\ntry:\r\n\tgroup = doc.Create.NewGroup(items);\r\n\tgroup.GroupType.Name = IN[3]\r\nexcept:\r\n\tgroup = list()\r\n\t\r\n# End Transaction\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = group",
+      "VariableInputPorts": true,
+      "Id": "c4d48fea82924a548da9a1a652e72cc2",
+      "Inputs": [
+        {
+          "Id": "e9da9668ed2d43d8aae8b1d2cf124e55",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ada354e554fb4052b733d72243bd25c8",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ee49351e82bf4374a48aa9652e7508d4",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7afad929fc1b430c84bed26574e6f1c6",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "733f1ae7e0d84823847e7e1517d019e2",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6c418f99bfc24e249e697e9a71f962a2",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Enable Python support and load DesignScript library\r\nimport clr\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference(\"RevitServices\")\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\n\r\nclr.AddReference(\"RevitAPI\")\r\nimport Autodesk\r\nfrom Autodesk.Revit.DB import *\r\n\r\nimport System\r\nfrom System.Collections.Generic import *\r\n\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\n\r\n\r\ncollector = FilteredElementCollector(doc).OfClass(FamilySymbol).ToElements()\r\n\r\n# Place your code below this line\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = collector",
+      "VariableInputPorts": true,
+      "Id": "ac9705139b4048379c827f9306d1424d",
+      "Inputs": [
+        {
+          "Id": "7e6e25538db24e8bab69c23aba9e6d87",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8e2453f8b60c454e8005e359b791fcdf",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "import clr\r\n\r\n# Verify these are needed.\r\nclr.AddReference('System')\r\nclr.AddReference('System.Drawing')\r\nclr.AddReference(\"System.Windows.Forms\")\r\n\r\n#  Windows Forms Elements\r\nfrom System.Drawing import Point, Icon, Color\r\nfrom System.Windows import Forms\r\nfrom System.Windows.Forms import Application, Form\r\nfrom System.Windows.Forms import DialogResult, GroupBox, FormBorderStyle\r\nfrom System.Windows.Forms import ComboBox, Button, DialogResult\r\n\r\nfamilies = IN[0]\r\n\r\nclass SelectFromList(Form):\r\n\r\n    \"\"\"\r\n    form = SelectFromList(floor_types.keys())\r\n    form.show()\r\n    if form.DialogResult == DialogResult.OK:\r\n        chosen_type_name = form.selected\r\n    \"\"\"\r\n\r\n    def __init__(self):\r\n        \"\"\"\r\n        Args:\r\n            title (str): Title of Prompt\r\n            options (dict): Name:Object\r\n            **sort (bool): Sort Entries\r\n        \"\"\"\r\n        \r\n        options = families\r\n\r\n        self.selected = None\r\n        options = sorted(options)\r\n\r\n        #  Window Settings\r\n        self.Text = 'Select View Type'\r\n        self.MinimizeBox = False\r\n        self.MaximizeBox = False\r\n        self.BackgroundColor = Color.White\r\n        self.FormBorderStyle = FormBorderStyle.FixedSingle\r\n        self.ShowIcon = False\r\n\r\n        combobox = ComboBox()\r\n        combobox.Width = 200\r\n        combobox.Height = 20\r\n        combobox.DataSource = options\r\n        self.combobox = combobox\r\n\r\n        button = Button()\r\n        button.Text = 'Select'\r\n        button.Location = Point(0,20)\r\n        button.Width = combobox.Width\r\n        button.Height = 20\r\n        button.Click += self.button_click\r\n\r\n        self.Width = combobox.Width + 16\r\n        self.Height = 80\r\n\r\n        self.Controls.Add(combobox)\r\n        self.Controls.Add(button)\r\n\r\n    def button_click(self, sender, event):\r\n        self.selected = self.combobox.SelectedValue\r\n        self.DialogResult = DialogResult.OK\r\n        self.Close()\r\n\r\n    def show(self):\r\n        \"\"\" Show Dialog \"\"\"\r\n        self.ShowDialog()\r\n        \r\ncomb = SelectFromList()\r\ncomboBox = Application.Run(comb)\r\n\r\nOUT = comb.selected",
+      "VariableInputPorts": true,
+      "Id": "9200d49fb39b4b748c5c0590c4a610bc",
+      "Inputs": [
+        {
+          "Id": "b7fe945e3764426bafd86acd16d4dc30",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eb880e226bf8423f9c811bd1b8575313",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "NodeType": "PythonScriptNode",
+      "Code": "# Import commom language runtime\r\nimport clr\r\n\r\nclr.AddReference('RevitAPI')\r\nfrom Autodesk.Revit.DB import FilteredElementCollector\r\n# from Autodesk.Revit.DB.Structure import *\r\n\r\nclr.AddReference('ProtoGeometry')\r\nfrom Autodesk.DesignScript.Geometry import *\r\n\r\nclr.AddReference('RevitAPIUI')\r\nfrom Autodesk.Revit.UI import *\r\n\r\nclr.AddReference('System')\r\nfrom System.Collections.Generic import List\r\n\r\nclr.AddReference('RevitNodes')\r\nimport Revit\r\nclr.ImportExtensions(Revit.GeometryConversion)\r\nclr.ImportExtensions(Revit.Elements)\r\n\r\nclr.AddReference('RevitServices')\r\nimport RevitServices\r\nfrom RevitServices.Persistence import DocumentManager\r\nfrom RevitServices.Transactions import TransactionManager\r\n\r\n# Import modules to create windows dialogues in Revit for user input\r\nclr.AddReference('System.Windows.Forms')\r\nclr.AddReference('System.Drawing')\r\nfrom System.Windows.Forms import *\r\nfrom System.Drawing import *\r\n\r\n# Import math module\r\nimport math\r\n\r\n# Create variables to store current document\r\ndoc = DocumentManager.Instance.CurrentDBDocument\r\nuidoc=DocumentManager.Instance.CurrentUIApplication.ActiveUIDocument\r\n\r\n# Pick model curve in Revit document to place elements\r\n# Code based on john pierson´s isolated select model elements node\r\nTaskDialog.Show(\"Isolated Selection\", \"Pick curve to follow path\")\r\n\r\nsel1 = uidoc.Selection\r\nobt1 = Selection.ObjectType.Element\r\n\r\n# Define class to filter elements of category to select \r\nclass CustomISelectionFilter(Selection.ISelectionFilter):\r\n\tdef __init__(self, nom_categorie):\r\n\t\tself.nom_categorie = nom_categorie\r\n\tdef AllowElement(self, e):\r\n\t\tif e.Category.Name == self.nom_categorie:\r\n\t\t\treturn True\r\n\t\telse:\r\n\t\t\treturn False\r\n\tdef AllowReference(self, ref, point):\r\n\t\treturn true\r\n\r\nel_ref = sel1.PickObject(obt1, CustomISelectionFilter(\"Lines\"))\r\n\t\t\r\n# Stores the selected modelcurve into curve, marks it as Revit owned element and extracts geometry\r\ncurve = doc.GetElement(el_ref.ElementId).ToDSType(True).Curve\r\n\r\n# Create a class form\r\nclass CreateWindow(Form):\r\n\tdef __init__(self):\r\n\t\t# Create the form\r\n\t\tself.Name = \"Create Window\"\r\n\t\tself.Text = \"Input number of divisions\"\r\n\t\tself.Size = Size(500, 150)\r\n\t\tself.CenterToScreen()\r\n\t\t\r\n\t\tself.values = 0\r\n\t\t\r\n\t\t# Create label for number of divisions\r\n\t\tlabelDiv = Label(Text = \"Number of elements to place: \")\r\n\t\tlabelDiv.Parent = self\r\n\t\tlabelDiv.Size = Size(200, 150)\r\n\t\tlabelDiv.Location = Point(30, 20)\r\n\t\t\r\n\t\t# Create TextBox for number of divisions\r\n\t\tself.textboxDiv = TextBox()\r\n\t\tself.textboxDiv.Parent = self\r\n\t\tself.textboxDiv.Text = \"10\"\r\n\t\tself.textboxDiv.Location = Point(300, 20)\r\n\t\r\n\t\t# Create button\r\n\t\tbutton = Button()\r\n\t\tbutton.Parent = self\r\n\t\tbutton.Text = \"Ok\"\r\n\t\tbutton.Location = Point(300, 60)\r\n\t\t\r\n\t\t# Register event\r\n\t\tbutton.Click += self.ButtonClicked\r\n\t\t\r\n\tdef ButtonClicked(self, sender, args):\r\n\t\tif sender.Click:\r\n\t\t\t# Handle non numeric cases\r\n\t\t\ttry:\r\n\t\t\t\tself.values = round(float(self.textboxDiv.Text))\r\n\t\t\t\tself.Close()\r\n\t\t\texcept:\r\n\t\t\t\tlabelDiv = Label(Text = \"Enter number please: \")\r\n\r\n# Call the CreateWindow class and create the input for number of divisions\r\nform = CreateWindow()\r\nApplication.Run(form)\r\n\r\n# Assign the inout to numberElements\r\nnumberElements = form.values\r\n\r\ncollector = FilteredElementCollector(doc).OfClass(FamilySymbol).ToElements()\r\n\r\nclass SelectFromList(Form):\r\n\r\n    \"\"\"\r\n    form = SelectFromList(floor_types.keys())\r\n    form.show()\r\n    if form.DialogResult == DialogResult.OK:\r\n        chosen_type_name = form.selected\r\n    \"\"\"\r\n\r\n    def __init__(self):\r\n        \r\n\t    \"\"\"\r\n\t    form = SelectFromList(floor_types.keys())\r\n\t    form.show()\r\n\t    if form.DialogResult == DialogResult.OK:\r\n\t        chosen_type_name = form.selected\r\n\t    \"\"\"\r\n\r\n    def __init__(self, title, options):\r\n        \"\"\"\r\n        Args:\r\n            title (str): Title of Prompt\r\n            options (dict): Name:Object\r\n            **sort (bool): Sort Entries\r\n        \"\"\"\r\n\r\n\r\n        self.selected = None\r\n        options = sorted(options)\r\n\r\n        #  Window Settings\r\n        self.Text = 'Select View Type'\r\n        self.MinimizeBox = False\r\n        self.MaximizeBox = False\r\n        self.BackgroundColor = Color.White\r\n        self.FormBorderStyle = FormBorderStyle.FixedSingle\r\n        self.ShowIcon = False\r\n        self.CenterToScreen()\r\n\r\n        combobox = ComboBox()\r\n        combobox.Width = 500\r\n        combobox.Height = 300\r\n        combobox.DataSource = options\r\n        self.combobox = combobox\r\n\r\n        button = Button()\r\n        button.Text = 'Select'\r\n        button.Location = Point(0,100)\r\n        button.Width = combobox.Width\r\n        button.Height = 50\r\n        button.Click += self.button_click\r\n\r\n        self.Width = combobox.Width + 16\r\n        self.Height = 300\r\n\r\n        self.Controls.Add(combobox)\r\n        self.Controls.Add(button)\r\n\r\n    def button_click(self, sender, event):\r\n        self.selected = self.combobox.SelectedValue\r\n        self.DialogResult = DialogResult.OK\r\n        self.Close()\r\n\r\n    def show(self):\r\n        \"\"\" Show Dialog \"\"\"\r\n        self.ShowDialog()\r\n        \r\ncomb = SelectFromList(\"Select family to place in points\", collector)\r\ncomboBox = Application.Run(comb)\r\n\r\nfamilyInstance = comb.selected\r\n\r\n# Check start and end points of the curve\r\nstartPoint = curve.StartPoint\r\nendPoint = curve.EndPoint\r\n\r\n# Divide curve\r\ndividedCurve = curve.PointsAtEqualSegmentLength(numberElements)\r\nfinalCurve = list()\r\n\r\n# Check if the strings of startPoint and endPoint are the same\r\nif str(startPoint) == str(endPoint):\r\n\t# Closed curve, it needs only to add the start point\r\n\tfinalCurve.append(startPoint)\r\n\tfor el in dividedCurve:\r\n\t\tfinalCurve.append(el)\r\nelse:\r\n\t# Open curve, needs both start and end points\r\n\tfinalCurve.append(startPoint)\r\n\tfor el in dividedCurve:\r\n\t\tfinalCurve.append(el)\r\n\tfinalCurve.append(endPoint)\r\n\r\n# Create a list with tangent vectors to the curve at the division points\r\ntangVector = list()\r\n\r\nfor point in finalCurve:\r\n\ttangVector.append(curve.TangentAtParameter(curve.ParameterAtPoint(point)))\r\n\t\r\n# Create a list with the angle between the tangent vector and the curve\tin radians\r\nangleRot = list()\r\nvectorX = Vector.XAxis()\r\nvectorZ = Vector.ZAxis()\r\n\r\nfor vec in tangVector:\r\n\tangleRot.append(-vec.AngleAboutAxis(vectorX, vectorZ) * math.pi/180)\r\n\r\n# Open transaction to place all the family instances\r\nTransactionManager.Instance.EnsureInTransaction(doc)\r\n\r\ninstances = list()\r\nplacePoint = []\r\ni = 0\r\n\r\nfor point in finalCurve:\r\n\r\n\tvec = Line.ByStartPointDirectionLength(point, vectorZ, 1).ToRevitType()\r\n\t\r\n\tinstance = doc.Create.NewFamilyInstance(point.ToXyz(), familyInstance, StructuralType.NonStructural)\r\n\tElementTransformUtils.RotateElement(doc, instance.Id, vec, angleRot[i])\r\n\ti = i +1\r\n\t\r\n\tinstances.append(instance.Id)\r\n\tplacePoint.append(instance.GetFamilyPointPlacementReferences())\r\n\r\nitems = List[ElementId](instances)\r\n\r\ntry:\r\n\tgroup = doc.Create.NewGroup(items);\r\n\tgroup.GroupType.Name = IN[3]\r\nexcept:\r\n\tgroup = list()\r\n\t\r\n# End Transaction\r\nTransactionManager.Instance.TransactionTaskDone()\r\n\r\n# Assign your output to the OUT variable.\r\nOUT = instances",
+      "VariableInputPorts": true,
+      "Id": "d3587530151f4010b7b65a31ecdf3787",
+      "Inputs": [
+        {
+          "Id": "834d7eaca7ea4c97acafcbd1f6ea22af",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "24bbd2c4050e4e4495203cea333724ce",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "975bf5b49f974fc094e192df7c23f62d",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d55cfacc3938447cb812e500c045e62b",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6503efb3ae994d5aa299cc068af1c938",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "66fccdd2f65f4e1b95ac34820ea4fb97",
+          "Name": "OUT",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded IronPython script."
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "787d517fed704d1e9016e14f29d5c431",
+      "End": "ada354e554fb4052b733d72243bd25c8",
+      "Id": "9f1f4fcc69a34b439972f9d517441c68"
+    },
+    {
+      "Start": "6101300427644079ad682df11b44ea9a",
+      "End": "ee49351e82bf4374a48aa9652e7508d4",
+      "Id": "cbb3e339f9674c678bb00f6dae3a6e85"
+    },
+    {
+      "Start": "28c7900e2e1d486fadc90b8fb9ec7503",
+      "End": "7afad929fc1b430c84bed26574e6f1c6",
+      "Id": "6c178eb764794c87912799fae8e79aed"
+    },
+    {
+      "Start": "783849a4722d44049096dfe755a168fa",
+      "End": "733f1ae7e0d84823847e7e1517d019e2",
+      "Id": "8a1847f9e2704aff8f02a5a6475c22f7"
+    },
+    {
+      "Start": "1498900aba8c4db8a2d0944ef6757e40",
+      "End": "e9da9668ed2d43d8aae8b1d2cf124e55",
+      "Id": "074877f0ba4f40fd81d9e730e6ba5ad8"
+    },
+    {
+      "Start": "8e2453f8b60c454e8005e359b791fcdf",
+      "End": "b7fe945e3764426bafd86acd16d4dc30",
+      "Id": "941239b186dc48a785bb5970ab56ce5d"
+    }
+  ],
+  "Dependencies": [],
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.0.2.6826",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "Background Preview",
+      "EyeX": 21.919529272806074,
+      "EyeY": -123.76466990692016,
+      "EyeZ": 90.592916364271176,
+      "LookX": 7.9548087145771955,
+      "LookY": 75.053451021524012,
+      "LookZ": 28.663460425820642,
+      "UpX": 0.22169887837339647,
+      "UpY": -0.55919290347074824,
+      "UpZ": 0.79884473086822938
+    },
+    "NodeViews": [
+      {
+        "Id": "d64df23d59bb463791523e10de2ce5c7",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Name": "Element to Place along Matrix",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 582.58376440214374,
+        "Y": 3316.4502208966705
+      },
+      {
+        "Id": "1efdc3bde2fd45ceba9ba0cafe77331d",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Name": "Level to Place the Elements",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 745.0046750386507,
+        "Y": 3451.4244586341711
+      },
+      {
+        "Id": "888d706f6ea8425d80a8c7549a086d8a",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Name": "Name for the Group",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 789.73539009940851,
+        "Y": 3581.0548299516258
+      },
+      {
+        "Id": "677b6d78254b4da5b3dc7dc045b7c27f",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Name": "Number of Elements",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 628.03321440913,
+        "Y": 3692.7594078124066
+      },
+      {
+        "Id": "bebd2398f5854d2bb5ba9511480ec3b7",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Name": "Select Model Curve",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 767.57860891187147,
+        "Y": 3159.203505088969
+      },
+      {
+        "Id": "c4d48fea82924a548da9a1a652e72cc2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Matrix of Elements along a Curve",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1392.744304143376,
+        "Y": 3256.7674050071314
+      },
+      {
+        "Id": "ac9705139b4048379c827f9306d1424d",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": false,
+        "X": 1296.876674156108,
+        "Y": 4224.7009381064618
+      },
+      {
+        "Id": "9200d49fb39b4b748c5c0590c4a610bc",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Python Script",
+        "ShowGeometry": true,
+        "Excluded": true,
+        "X": 1728.637402425494,
+        "Y": 4094.6228261124566
+      },
+      {
+        "Id": "d3587530151f4010b7b65a31ecdf3787",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Name": "Matrix of Elements along a Curve",
+        "ShowGeometry": true,
+        "Excluded": true,
+        "X": 1830.3198839117858,
+        "Y": 4213.224164064357
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "8c7beeaaca224785b5f689dcadd32b81",
+        "Title": "INPUT",
+        "Nodes": [
+          "1efdc3bde2fd45ceba9ba0cafe77331d",
+          "d64df23d59bb463791523e10de2ce5c7",
+          "888d706f6ea8425d80a8c7549a086d8a",
+          "677b6d78254b4da5b3dc7dc045b7c27f",
+          "bebd2398f5854d2bb5ba9511480ec3b7"
+        ],
+        "Left": 572.58376440214374,
+        "Top": 3127.6035050889691,
+        "Width": 363.15162569726476,
+        "Height": 632.95590272343748,
+        "FontSize": 18.0,
+        "InitialTop": 3159.203505088969,
+        "InitialHeight": 678.55590272343761,
+        "TextblockHeight": 21.6,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "a1b5e475e54d4ba4bbfeac701647aa09",
+        "Title": "INSTRUCTIONS ",
+        "Nodes": [
+          "235c321a22e247b2aceb96a61c69c766"
+        ],
+        "Left": 232.82494887831746,
+        "Top": 2812.929127390239,
+        "Width": 325.6,
+        "Height": 212.79999999999981,
+        "FontSize": 36.0,
+        "InitialTop": 2866.1291273902389,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 43.2,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "7c3db056c0cd4a26aeb5b5a7f53ba872",
+        "Title": "BACK-END",
+        "Nodes": [
+          "697c2712b9654006b32f13c6b15b7ccd"
+        ],
+        "Left": 1388.150700521956,
+        "Top": 2896.2286850351529,
+        "Width": 247.2,
+        "Height": 111.99999999999991,
+        "FontSize": 48.0,
+        "InitialTop": 2963.8286850351528,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 57.6,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "61e6d659a2fd4bc6817719f649075b9c",
+        "Title": "USER INTERFACE",
+        "Nodes": [
+          "b736caf6964a40579442292e116feb6c"
+        ],
+        "Left": 624.71317354615394,
+        "Top": 2846.0292009271971,
+        "Width": 303.2,
+        "Height": 169.59999999999982,
+        "FontSize": 48.0,
+        "InitialTop": 2971.2292009271969,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 115.2,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "421576d1d71643a8b6cb82e9be027b7e",
+        "Title": "WIP",
+        "Nodes": [
+          "ec4993586b344288a7014076c8901d77",
+          "3aba73cf8f884691b01b61227d3cd434"
+        ],
+        "Left": 1848.0326798377823,
+        "Top": 2571.3236427049728,
+        "Width": 212.80000000000027,
+        "Height": 213.6212157996012,
+        "FontSize": 36.0,
+        "InitialTop": 2624.5236427049726,
+        "InitialHeight": 227.2212157996014,
+        "TextblockHeight": 43.2,
+        "Background": "#FFFFC999"
+      },
+      {
+        "Id": "cef37fbf55d742758cc936c47ac7a412",
+        "Title": "TO REVIT",
+        "Nodes": [
+          "af28c1283d0a44d092c0988a2699a924",
+          "f5e39ccfd7c644028d125ddba5f0e35c"
+        ],
+        "Left": 1283.0639955645161,
+        "Top": 2572.1106652725807,
+        "Width": 167.4539919325758,
+        "Height": 212.28612548280006,
+        "FontSize": 36.0,
+        "InitialTop": 2625.3106652725805,
+        "InitialHeight": 225.88612548280025,
+        "TextblockHeight": 43.2,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "486b466085fa4e7daaa56bc0af45b3d9",
+        "Title": "DESIGN",
+        "Nodes": [
+          "fe37db86b4304e1f81113df5b311cb1b",
+          "4ebb26f8ead9461bb887d047bcd24561"
+        ],
+        "Left": 913.81951845214962,
+        "Top": 2571.2375868076483,
+        "Width": 351.17615660154178,
+        "Height": 211.43610499129528,
+        "FontSize": 36.0,
+        "InitialTop": 2624.4375868076481,
+        "InitialHeight": 239.43610499129545,
+        "TextblockHeight": 43.2,
+        "Background": "#FFA4E1FF"
+      },
+      {
+        "Id": "360f3b3e21854619999677b2590c1b01",
+        "Title": "COMMENTS",
+        "Nodes": [
+          "28116d53bde74fe8b72886ee5dcfcb2d",
+          "92247aaac53147c2aa7065d6f181066b"
+        ],
+        "Left": 1469.5331907562054,
+        "Top": 2570.3044137497145,
+        "Width": 356.6156810398225,
+        "Height": 213.44466648221515,
+        "FontSize": 36.0,
+        "InitialTop": 2623.5044137497143,
+        "InitialHeight": 241.44466648221533,
+        "TextblockHeight": 43.2,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "a4c59603b49742ff80f16d1a8c37250c",
+        "Title": "INPUT",
+        "Nodes": [
+          "72ece10271c540e08b5ca39856724d33",
+          "c96f1785b3f14bfd905d63a7e7f2645d"
+        ],
+        "Left": 628.25529492265332,
+        "Top": 2569.4579568766112,
+        "Width": 264.25373477215328,
+        "Height": 209.71525247810695,
+        "FontSize": 36.0,
+        "InitialTop": 2622.657956876611,
+        "InitialHeight": 223.31525247810714,
+        "TextblockHeight": 43.2,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "c18d3fcc646b47759df093050fa35fe3",
+        "Title": "MATRIX ALONG CURVE",
+        "Nodes": [
+          "57ab4fa729f74539bce0cd17404d0744"
+        ],
+        "Left": 234.47826483367521,
+        "Top": 2434.4891541737179,
+        "Width": 325.6,
+        "Height": 313.60000000000008,
+        "FontSize": 36.0,
+        "InitialTop": 2530.889154173718,
+        "InitialHeight": 140.0,
+        "TextblockHeight": 86.4,
+        "Background": "#FFB9F9E1"
+      },
+      {
+        "Id": "2e541185ea834e598a097ecfada4e055",
+        "Title": "Create Matrix and Group",
+        "Nodes": [
+          "c4d48fea82924a548da9a1a652e72cc2"
+        ],
+        "Left": 1382.744304143376,
+        "Top": 3225.1674050071315,
+        "Width": 237.6,
+        "Height": 226.59999999999991,
+        "FontSize": 18.0,
+        "InitialTop": 3256.7674050071314,
+        "InitialHeight": 145.0,
+        "TextblockHeight": 21.6,
+        "Background": "#FFFFB8D8"
+      },
+      {
+        "Id": "235c321a22e247b2aceb96a61c69c766",
+        "Title": "                                                                                       \r\nINSTRUCTIONS:\r\n\r\n1. Fill in the required fields inside the yellow group\r\n\r\n2. Click on Run\r\n\r\n3. rename the group if you want to create a new matrix",
+        "Nodes": [],
+        "Left": 242.82494887831746,
+        "Top": 2866.1291273902389,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "697c2712b9654006b32f13c6b15b7ccd",
+        "Title": "BACK-END FUNCTIONALITY                  ",
+        "Nodes": [],
+        "Left": 1398.150700521956,
+        "Top": 2963.8286850351528,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "b736caf6964a40579442292e116feb6c",
+        "Title": "INPUT                                                                      ",
+        "Nodes": [],
+        "Left": 634.71317354615394,
+        "Top": 2971.2292009271969,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "3aba73cf8f884691b01b61227d3cd434",
+        "Title": "USE:\r\nFOR UNFINISHED OR UNTESTED\r\nBLOCKS OF CODE",
+        "Nodes": [],
+        "Left": 1858.0326798377823,
+        "Top": 2711.744858504574,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "f5e39ccfd7c644028d125ddba5f0e35c",
+        "Title": "USE:\r\nFOR ANY GROUP THAT \r\nWRITES DATA TO REVIT",
+        "Nodes": [],
+        "Left": 1294.9179874970919,
+        "Top": 2711.1967907553808,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "4ebb26f8ead9461bb887d047bcd24561",
+        "Title": "USE:\r\nFOR BLOCKS OF CODE THAT DO A SPECIFIC TASK",
+        "Nodes": [],
+        "Left": 923.81951845214962,
+        "Top": 2723.8736917989436,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "28116d53bde74fe8b72886ee5dcfcb2d",
+        "Title": "USE:\r\nFOR ANY COMMENTS OR PROJECT INFO",
+        "Nodes": [],
+        "Left": 1479.5331907562054,
+        "Top": 2724.9490802319297,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "c96f1785b3f14bfd905d63a7e7f2645d",
+        "Title": "USE:\r\nINPUTS THAT ARE REQUIRED TO BE\r\nSET BY THE USER",
+        "Nodes": [],
+        "Left": 638.25529492265332,
+        "Top": 2705.9732093547182,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "57ab4fa729f74539bce0cd17404d0744",
+        "Title": "                                                                                       \r\nCREATED BY:\r\nCREATED: 2018-08-21\r\nVERSION: \r\nLAST EDITED: 2019-01-21\r\n\r\nDYNAMO VERSION: 2.0\r\n\r\nPACKAGES:\r\nClockwork\r\n\r\nNOTES:\r\n",
+        "Nodes": [],
+        "Left": 244.47826483367521,
+        "Top": 2530.889154173718,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "ec4993586b344288a7014076c8901d77",
+        "Title": "WIP",
+        "Nodes": [],
+        "Left": 1861.9514094679839,
+        "Top": 2624.5236427049726,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "af28c1283d0a44d092c0988a2699a924",
+        "Title": "TO REVIT",
+        "Nodes": [],
+        "Left": 1293.0639955645161,
+        "Top": 2625.3106652725805,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "fe37db86b4304e1f81113df5b311cb1b",
+        "Title": "DESIGN",
+        "Nodes": [],
+        "Left": 926.43002851727442,
+        "Top": 2624.4375868076481,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "92247aaac53147c2aa7065d6f181066b",
+        "Title": "COMMENTS",
+        "Nodes": [],
+        "Left": 1480.4575097163829,
+        "Top": 2623.5044137497143,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "72ece10271c540e08b5ca39856724d33",
+        "Title": "INPUT",
+        "Nodes": [],
+        "Left": 638.66822681716667,
+        "Top": 2622.657956876611,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": -23.227220123795291,
+    "Y": -1249.0696053407953,
+    "Zoom": 0.50949752569589668
+  }
+}
